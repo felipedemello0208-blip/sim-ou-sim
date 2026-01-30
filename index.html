@@ -20,6 +20,7 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            <div class="hearts"></div>
         }
 
         h1 {
@@ -50,6 +51,65 @@
             color: white;
             position: absolute;
         }
+        .hearts {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    bottom: -40px;
+    width: 40px;
+    height: 40px;
+    background: #ff4d6d;
+    transform: rotate(-45deg);
+    animation: floatUp 6s linear forwards;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #ff4d6d;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -20px;
+    left: 0;
+}
+
+.heart::after {
+    left: 20px;
+    top: 0;
+}
+
+.heart span {
+    position: absolute;
+    transform: rotate(45deg);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    top: 10px;
+    left: 8px;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-500px) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -80,6 +140,31 @@
         botaoNao.style.left = x + "px";
         botaoNao.style.top = y + "px";
     });
+    
+</script>
+<script>
+    const heartsContainer = document.querySelector(".hearts");
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+
+        const text = document.createElement("span");
+        text.innerText = "D+F";
+
+        heart.appendChild(text);
+
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 7000);
+    }
+
+    setInterval(createHeart, 700);
 </script>
 
 
