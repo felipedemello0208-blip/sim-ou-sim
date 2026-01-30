@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido Especial 💍</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #e60073;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            position: relative;
+            height: 100px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #sim {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #nao {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>💖 Você quer casar comigo? 💖</h1>
+
+    <div class="buttons">
+        <button id="sim" onclick="alert('💍 Sabia! Te amo ❤️')">Sim</button>
+        <button id="nao">Não</button>
+    </div>
+</div>
+
+<script>
+    const botaoNao = document.getElementById("nao");
+
+    botaoNao.addEventListener("mouseover", () => {
+        const largura = window.innerWidth - botaoNao.offsetWidth;
+        const altura = window.innerHeight - botaoNao.offsetHeight;
+
+        const x = Math.random() * largura;
+        const y = Math.random() * altura;
+
+        botaoNao.style.left = x + "px";
+        botaoNao.style.top = y + "px";
+    });
+</script>
+
+</body>
+</html>
