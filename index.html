@@ -65,24 +65,23 @@
 
 <script>
     const botaoNao = document.getElementById("nao");
-    const botaoSim = document.getElementById("sim");
+    const container = document.querySelector(".container");
 
     botaoNao.addEventListener("mouseover", () => {
-        const simRect = botaoSim.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const botaoRect = botaoNao.getBoundingClientRect();
 
-        // distância máxima que o "não" pode fugir (em px)
-        const deslocamentoMax = 120;
+        const maxX = containerRect.width - botaoRect.width - 20;
+        const maxY = containerRect.height - botaoRect.height - 20;
 
-        const offsetX = (Math.random() * deslocamentoMax) - (deslocamentoMax / 2);
-        const offsetY = (Math.random() * deslocamentoMax) - (deslocamentoMax / 2);
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
 
-        const novoX = simRect.left + offsetX;
-        const novoY = simRect.top + offsetY;
-
-        botaoNao.style.left = novoX + "px";
-        botaoNao.style.top = novoY + "px";
+        botaoNao.style.left = x + "px";
+        botaoNao.style.top = y + "px";
     });
 </script>
+
 
 </body>
 </html>
