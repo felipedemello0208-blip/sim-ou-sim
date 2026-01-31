@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nossa História - Para o meu Nego</title>
+    <title>Para o meu Nego</title>
 
     <style>
         html, body {
@@ -31,22 +31,23 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(15px);
             padding: 40px 25px;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
             z-index: 100;
             width: 85%;
             max-width: 380px;
-            border: 1px solid rgba(241, 196, 15, 0.3);
+            border: 1px solid rgba(241, 196, 15, 0.4);
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
 
         #proposalBox h1 {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             margin-bottom: 35px;
             color: #f1c40f;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
@@ -60,75 +61,76 @@
             text-transform: uppercase;
             background: transparent;
             color: white;
+            font-weight: bold;
         }
 
-        #yesBtn { background: #f1c40f; color: #0f172a; font-weight: bold; }
+        #yesBtn { background: #f1c40f; color: #0f172a; }
         
         #noBtn { 
-            color: #64748b; 
-            border-color: #334155; 
+            color: #475569; 
+            border-color: #1e293b; 
             position: absolute; 
             z-index: 101; 
             pointer-events: none; 
+            opacity: 0.7;
         }
 
-        /* ================== TEXTO CRÉDITOS (BEM LENTO) ================== */
+        /* ================== TEXTO CRÉDITOS (AJUSTADO PARA CELULAR) ================== */
         #poem {
             position: absolute;
             width: 100%;
             left: 0;
             top: 100vh; 
             text-align: center;
-            font-size: 1.8rem;
-            line-height: 2.5;
-            padding: 0 30px;
+            font-size: 1.8rem; 
+            line-height: 2.2;
+            padding: 0 25px;
             box-sizing: border-box;
             z-index: 10;
             display: none;
         }
 
-        #poem p { margin-bottom: 200px; }
-        #poem strong { color: #f1c40f; font-size: 2.2rem; display: block; }
+        #poem p { 
+            margin-bottom: 150px; /* Espaço entre parágrafos no celular */
+        }
+
+        #poem strong { 
+            color: #f1c40f; 
+            font-size: 2.2rem; 
+            display: block; 
+            margin-bottom: 15px; 
+        }
 
         @keyframes subirPoema {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-1300%); }
+            100% { transform: translateY(-1200%); } /* Ajustado para o conteúdo atual */
         }
 
         .poem-animate {
             display: block !important;
-            animation: subirPoema 380s linear forwards;
+            /* 220 segundos = Aprox. 3.6 minutos. Ideal para leitura e música. */
+            animation: subirPoema 220s linear forwards;
         }
 
-        /* ================== ELEMENTOS FLUTUANTES (FOTOS E ANIMAÇÕES) ================== */
-        .floating {
-            position: absolute;
-            opacity: 0;
-            z-index: 5;
-            animation: subirGeral 70s linear infinite;
-        }
-
+        /* ================== FOTOS EM CORAÇÕES ================== */
         .heart-photo {
+            position: absolute;
             width: 150px;
             height: 150px;
             background-size: cover;
             background-position: center;
             clip-path: polygon(50% 15%, 80% 0%, 100% 20%, 100% 50%, 50% 95%, 0% 50%, 0% 20%, 20% 0%);
+            animation: subirFoto 45s linear infinite;
+            opacity: 0;
+            z-index: 5;
+            filter: brightness(0.8);
         }
 
-        .stick-figure {
-            font-size: 3rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        @keyframes subirGeral {
+        @keyframes subirFoto {
             0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
-            15% { opacity: 0.6; }
-            85% { opacity: 0.6; }
-            100% { transform: translateY(-250vh) scale(1.1); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-200vh) scale(1.1); opacity: 0; }
         }
 
         .star {
@@ -162,8 +164,9 @@
         <p><strong>Qualquer coisa.</strong></p>
         <p>O seu sorriso é o meu lar.</p>
         <p><strong>Eu estou aqui, Nego.</strong></p>
-        <p>Para sempre.</p>
-        <p style="font-size: 4rem;">💍</p>
+        <p>Não por hábito...<br>mas por escolha.</p>
+        <p>Todos os dias.<br>Para sempre.</p>
+        <p style="font-size: 4rem; margin-top: 50px;">💍</p>
     </div>
 
     <audio id="music" src="perfect.mp4"></audio>
@@ -176,56 +179,38 @@
     const poem = document.getElementById("poem");
     const music = document.getElementById("music");
 
-    // Botão "Não" foge sozinho
+    // Fugida do botão "Não"
     setInterval(() => {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = `${x}px`;
         noBtn.style.top = `${y}px`;
-    }, 1500);
+    }, 1300);
 
-    // Estrelas fixas
-    for (let i = 0; i < 40; i++) {
+    // Estrelas
+    for (let i = 0; i < 35; i++) {
         const star = document.createElement("div");
         star.className = "star";
-        star.style.width = "2px"; star.style.height = "2px";
+        star.style.width = "1.5px"; star.style.height = "1.5px";
         star.style.left = Math.random() * 100 + "%";
         star.style.top = Math.random() * 100 + "%";
         scene.appendChild(star);
     }
-
-    // Lista de "Cenas" em Emojis (Bonecos, Praia, Comida, Viagem)
-    const storyIcons = [
-        "👬", "💖", "✈️", "🏖️", "🍦", "🍕", "🚗", "🌊", "🍔", "🫂", "🏨", "🌅", "🍱"
-    ];
 
     yesBtn.onclick = () => {
         document.getElementById("proposalBox").style.display = "none";
         music.play();
         poem.classList.add("poem-animate");
 
-        // Gerar Fotos e Emojis flutuantes
-        for (let i = 1; i <= 25; i++) {
+        // Fotos aparecendo em intervalos de 7 segundos
+        for (let i = 1; i <= 13; i++) {
             setTimeout(() => {
-                const div = document.createElement("div");
-                div.className = "floating";
-                
-                // Alterna entre uma foto e um ícone da história
-                if (i % 2 === 0 && i <= 13) {
-                    div.classList.add("heart-photo");
-                    div.style.backgroundImage = `url(foto${i}.jpeg)`;
-                } else {
-                    div.classList.add("stick-figure");
-                    const icon = storyIcons[Math.floor(Math.random() * storyIcons.length)];
-                    div.innerHTML = `<span>${icon}</span><span style="font-size:10px; opacity:0.5;">● ●</span>`;
-                }
-
-                div.style.left = Math.random() * 80 + 5 + "%";
-                // Velocidade de subida bem lenta e variada
-                div.style.animationDuration = (60 + Math.random() * 40) + "s";
-                
-                scene.appendChild(div);
-            }, i * 4000); 
+                const photo = document.createElement("div");
+                photo.className = "heart-photo";
+                photo.style.left = Math.random() * 65 + 10 + "%";
+                photo.style.backgroundImage = `url(foto${i}.jpeg)`;
+                scene.appendChild(photo);
+            }, i * 7000); 
         }
     };
 </script>
