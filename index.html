@@ -132,29 +132,28 @@ button {
     left: 130px;
 }
 
-/* 📜 POEMA */
+/* 📜 POEMA — SEM FLEX, SEM CENTRO */
 .poema {
     position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    z-index: 4;
-    pointer-events: none;
-}
-
-.poema-texto {
-    position: absolute;
-    bottom: -100%;
-    font-size: 24px;
-    line-height: 1.9;
+    left: 50%;
+    bottom: -120%;
+    transform: translateX(-50%);
+    width: 100%;
     max-width: 720px;
+    padding: 0 20px;
     text-align: center;
-    animation: subirTexto 60s linear forwards;
+    z-index: 4;
+    animation: subirTexto 65s linear forwards;
 }
 
 @keyframes subirTexto {
-    from { bottom: -100%; }
+    from { bottom: -120%; }
     to   { bottom: 120%; }
+}
+
+.poema-texto {
+    font-size: 24px;
+    line-height: 1.9;
 }
 
 /* 📱 MOBILE */
@@ -162,7 +161,6 @@ button {
     .poema-texto {
         font-size: 22px;
         line-height: 2;
-        padding: 0 16px;
     }
 }
 </style>
@@ -194,7 +192,7 @@ setInterval(() => {
     nao.style.top = Math.random() * 40 + "px";
 }, 500);
 
-/* 📸 IMAGENS EXISTENTES */
+/* 📸 IMAGENS */
 const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
 const heartsContainer = document.querySelector(".hearts");
 
@@ -225,7 +223,7 @@ function aceitou() {
     musica.volume = 0.6;
     musica.play();
 
-    /* ⏱️ 2 SEGUNDOS DE RESPIRAÇÃO */
+    /* ⏱️ 2 SEGUNDOS REAIS — TEXTO AINDA NÃO EXISTE */
     setTimeout(() => {
         const poema = document.createElement("div");
         poema.className = "poema";
