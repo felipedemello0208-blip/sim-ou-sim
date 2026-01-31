@@ -3,282 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amor da Minha Vida</title>
+<title>Para Sempre</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
-
-* { box-sizing: border-box; }
-
-body {
+html, body {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    font-family: 'Playfair Display', serif;
-    background: radial-gradient(circle at center, #7a3a4a, #3a141d 75%);
-    color: #fff;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(180deg, #f2f2f2, #dcdcdc);
 }
 
-/* 🎞️ FILM GRAIN */
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.07;
-    pointer-events: none;
+/* ================== FUNDO CINEMATOGRÁFICO ================== */
+#scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* ================== BOTÕES ================== */
+#proposalBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.85);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
     z-index: 10;
 }
 
-/* ❤️ CORAÇÕES */
-.hearts {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.heart {
-    position: absolute;
-    bottom: -160px;
-    width: var(--size);
-    height: var(--size);
-    background: rgba(200, 90, 120, 0.6);
-    transform: rotate(-45deg);
-    animation: subir linear forwards;
-}
-
-.heart::before,
-.heart::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    border-radius: 50%;
-}
-
-.heart::before { top: -50%; left: 0; }
-.heart::after { left: 50%; top: 0; }
-
-.heart img {
-    position: absolute;
-    width: 72%;
-    height: 72%;
-    object-fit: cover;
-    border-radius: 14px;
-    transform: rotate(45deg);
-    top: 14%;
-    left: 14%;
-    animation: zoomFoto 22s ease-in-out forwards;
-}
-
-@keyframes zoomFoto {
-    from { transform: rotate(45deg) scale(1); }
-    to { transform: rotate(45deg) scale(1.18); }
-}
-
-@keyframes subir {
-    from { transform: translateY(0) rotate(-45deg); opacity: 1; }
-    to { transform: translateY(-145vh) rotate(-45deg); opacity: 0; }
-}
-
-/* 📦 CAIXA INICIAL */
-.container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-}
-
-.box {
-    background: rgba(0,0,0,0.55);
-    padding: 32px 26px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 330px;
-}
-
-.box h1 {
-    font-size: 22px;
-    margin-bottom: 26px;
-}
-
-.buttons {
-    position: relative;
-    height: 90px;
+#proposalBox h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 12px 28px;
-    font-size: 18px;
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    margin: 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     cursor: pointer;
 }
 
-#sim {
-    background: #4CAF50;
+#yesBtn {
+    background: #111;
     color: #fff;
 }
 
-#nao {
-    background: #c0392b;
+#noBtn {
+    background: #aaa;
     color: #fff;
     position: absolute;
-    top: 0;
-    left: 130px;
 }
 
-/* 📜 POEMA — SEM FLEX, SEM CENTRO */
-.poema {
-    position: fixed;
-    left: 50%;
-    bottom: -120%;
-    transform: translateX(-50%);
+/* ================== TEXTO POEMA ================== */
+#poem {
+    position: absolute;
     width: 100%;
-    max-width: 720px;
-    padding: 0 20px;
+    bottom: -100vh; /* COMEÇA FORA DA TELA */
     text-align: center;
-    z-index: 4;
-    animation: subirTexto 65s linear forwards;
+    font-size: 2rem;
+    line-height: 1.6;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 5;
 }
 
-@keyframes subirTexto {
-    from { bottom: -120%; }
-    to   { bottom: 120%; }
-}
-
-.poema-texto {
-    font-size: 24px;
-    line-height: 1.9;
-}
-
-/* 📱 MOBILE */
-@media (max-width: 600px) {
-    .poema-texto {
-        font-size: 22px;
-        line-height: 2;
+/* animação REAL */
+@keyframes subirPoema {
+    from {
+        bottom: -120vh;
     }
+    to {
+        bottom: 120vh;
+    }
+}
+
+.poem-animate {
+    animation: subirPoema 90s linear forwards;
+}
+
+/* ================== CORAÇÕES ================== */
+.heart {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    animation: subir 30s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes subir {
+    from {
+        transform: translateY(110vh) scale(0.8);
+    }
+    to {
+        transform: translateY(-130vh) scale(1.1);
+    }
+}
+
+/* ================== FILM GRAIN ================== */
+#grain {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.04;
+    z-index: 20;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="musica">
-    <source src="perfect.mp4" type="video/mp4">
-</audio>
+<div id="scene">
 
-<div class="hearts"></div>
-
-<div class="container" id="inicio">
-    <div class="box">
-        <h1>Quer passar a vida comigo?</h1>
-        <div class="buttons">
-            <button id="sim" onclick="aceitou()">Sim</button>
-            <button id="nao">Não</button>
-        </div>
+    <div id="proposalBox">
+        <h1>Quer casar comigo?</h1>
+        <button id="yesBtn">Sim</button>
+        <button id="noBtn">Não</button>
     </div>
+
+    <div id="poem">
+        <p>Eu te amo<br>do jeito que não sei explicar.</p>
+
+        <p>Não é um amor que cabe em palavras,<br>
+        nem em promessas,<br>
+        nem em textos bem escritos.</p>
+
+        <p>É um amor que mora no gesto pequeno,<br>
+        no cuidado silencioso,<br>
+        no ficar quando seria mais fácil ir.</p>
+
+        <p>Eu te amo todos os dias.<br>
+        Não só nos dias bons.<br>
+        Mas nos dias cansados,<br>
+        nos dias em que o mundo pesa,<br>
+        nos dias em que você não percebe<br>
+        o quanto é extraordinário.</p>
+
+        <p>Ser seu parceiro é um privilégio.<br>
+        É acordar grato.<br>
+        É entender que a vida faz mais sentido<br>
+        porque eu não caminho sozinho.</p>
+
+        <p>Se eu pudesse resumir tudo o que sinto,<br>
+        diria apenas isso:<br>
+        eu faria qualquer coisa<br>
+        para te ver feliz.</p>
+
+        <p><strong>Qualquer coisa.</strong></p>
+
+        <p>Não porque eu preciso,<br>
+        mas porque o seu sorriso<br>
+        é um lugar onde eu descanso.</p>
+
+        <p>E se um dia você duvidar,<br>
+        se o medo falar mais alto,<br>
+        se o tempo tentar nos cansar,<br>
+        olhe para mim.</p>
+
+        <p><strong>Eu estou aqui.</strong></p>
+
+        <p>Não por hábito.<br>
+        Não por conforto.<br>
+        Mas por escolha.</p>
+
+        <p><strong>Todos os dias.<br>
+        Sempre.</strong></p>
+    </div>
+
+    <audio id="music" src="perfect.mp4"></audio>
+
+    <div id="grain"></div>
+
 </div>
 
 <script>
-/* ❌ NÃO FOGE SOZINHO */
-const nao = document.getElementById("nao");
+/* ================== NÃO FUGINDO ================== */
+const noBtn = document.getElementById("noBtn");
 setInterval(() => {
-    nao.style.left = Math.random() * 180 + "px";
-    nao.style.top = Math.random() * 40 + "px";
-}, 500);
+    noBtn.style.left = Math.random() * 70 + "%";
+    noBtn.style.top = Math.random() * 70 + "%";
+}, 800);
 
-/* 📸 IMAGENS */
-const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
-const heartsContainer = document.querySelector(".hearts");
+/* ================== SIM ================== */
+document.getElementById("yesBtn").onclick = () => {
+    document.getElementById("proposalBox").style.display = "none";
 
-function criarCoracao() {
-    const h = document.createElement("div");
-    h.className = "heart";
+    const music = document.getElementById("music");
+    music.play();
 
-    const size = 130 + Math.random() * 90;
-    h.style.setProperty("--size", size + "px");
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (20 + Math.random() * 12) + "s";
-
-    const img = document.createElement("img");
-    img.src = fotos[Math.floor(Math.random() * fotos.length)];
-    h.appendChild(img);
-
-    heartsContainer.appendChild(h);
-    setTimeout(() => h.remove(), 35000);
-}
-
-setInterval(criarCoracao, 2500);
-
-/* ▶️ ACEITOU */
-function aceitou() {
-    document.getElementById("inicio").style.display = "none";
-
-    const musica = document.getElementById("musica");
-    musica.volume = 0.6;
-    musica.play();
-
-    /* ⏱️ 2 SEGUNDOS REAIS — TEXTO AINDA NÃO EXISTE */
     setTimeout(() => {
-        const poema = document.createElement("div");
-        poema.className = "poema";
-        poema.innerHTML = `
-        <div class="poema-texto">
-            Eu te amo<br>
-            do jeito que não sei explicar.<br><br>
-
-            Não é um amor que cabe em palavras,<br>
-            nem em promessas,<br>
-            nem em textos bem escritos.<br><br>
-
-            É um amor que mora no gesto pequeno,<br>
-            no cuidado silencioso,<br>
-            no ficar quando seria mais fácil ir.<br><br>
-
-            Eu te amo todos os dias.<br>
-            Não só nos dias bons.<br>
-            Mas nos dias cansados,<br>
-            nos dias em que o mundo pesa,<br>
-            nos dias em que você não percebe<br>
-            o quanto é extraordinário.<br><br>
-
-            Ser seu parceiro é um privilégio.<br>
-            É acordar grato.<br>
-            É entender que a vida faz mais sentido<br>
-            porque eu não caminho sozinho.<br><br>
-
-            Se eu pudesse resumir tudo o que sinto,<br>
-            diria apenas isso:<br>
-            eu faria qualquer coisa<br>
-            para te ver feliz.<br><br>
-
-            Qualquer coisa.<br><br>
-
-            Não porque eu preciso,<br>
-            mas porque o seu sorriso<br>
-            é um lugar onde eu descanso.<br><br>
-
-            E se um dia você duvidar,<br>
-            se o medo falar mais alto,<br>
-            se o tempo tentar nos cansar,<br>
-            olhe para mim.<br><br>
-
-            Eu estou aqui.<br><br>
-
-            Não por hábito.<br>
-            Não por conforto.<br>
-            Mas por escolha.<br><br>
-
-            Todos os dias.<br>
-            Sempre.
-        </div>`;
-        document.body.appendChild(poema);
+        const poem = document.getElementById("poem");
+        poem.classList.add("poem-animate");
     }, 2000);
+};
+
+/* ================== CORAÇÕES COM FOTOS ================== */
+for (let i = 1; i <= 13; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * 80 + "%";
+    heart.style.animationDelay = Math.random() * 20 + "s";
+    heart.style.backgroundImage = `url(foto${i}.jpeg)`;
+    document.getElementById("scene").appendChild(heart);
 }
 </script>
 
