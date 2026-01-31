@@ -13,11 +13,11 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Georgia', serif;
-            background: linear-gradient(180deg, #f2f2f2, #dcdcdc);
+            /* Fundo Rosa Romântico */
+            background: linear-gradient(180deg, #ffafbd, #ffc3a0);
             touch-action: manipulation;
         }
 
-        /* ================== FUNDO E CENA ================== */
         #scene {
             position: relative;
             width: 100%;
@@ -31,122 +31,123 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255,255,255,0.9);
-            padding: 30px;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            border-radius: 30px;
             text-align: center;
             z-index: 100;
-            width: 80%;
-            max-width: 320px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 350px;
+            box-shadow: 0 15px 35px rgba(212, 63, 141, 0.3);
         }
 
         #proposalBox h1 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: #333;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            color: #d43f8d;
         }
 
         button {
             font-size: 1.1rem;
-            padding: 12px 28px;
+            padding: 15px 30px;
             margin: 10px;
             border: none;
-            border-radius: 30px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
+            font-weight: bold;
         }
 
         #yesBtn {
-            background: #111;
+            background: #d43f8d;
             color: #fff;
         }
 
         #noBtn {
-            background: #aaa;
-            color: #fff;
+            background: #f8bbd0;
+            color: #d43f8d;
             position: absolute;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             z-index: 101;
         }
 
-        /* ================== TEXTO POEMA (SUBIDA) ================== */
+        /* ================== TEXTO POEMA (MUITO LENTO) ================== */
         #poem {
             position: absolute;
             width: 100%;
             left: 0;
-            /* Começa totalmente fora da tela (abaixo) */
             top: 100vh; 
             text-align: center;
-            font-size: 1.4rem;
-            line-height: 1.8;
+            font-size: 1.5rem;
+            line-height: 2;
             padding: 20px;
             box-sizing: border-box;
             z-index: 10;
-            color: #222;
-            display: none; /* Só aparece após o Sim */
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            display: none;
         }
 
         #poem p {
-            margin-bottom: 50px;
+            margin-bottom: 80px; /* Mais espaço para leitura calma */
         }
 
-        /* Animação de subida */
         @keyframes subirPoema {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                /* Sobe o suficiente para passar por toda a tela */
-                transform: translateY(-400%); 
-            }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-500%); }
         }
 
         .poem-animate {
             display: block !important;
-            animation: subirPoema 75s linear forwards;
+            /* 120 segundos para uma subida bem lenta */
+            animation: subirPoema 120s linear forwards;
         }
 
-        /* ================== CORAÇÕES COM FOTOS ================== */
-        .heart {
+        /* ================== FOTOS EM FORMATO DE CORAÇÃO ================== */
+        .heart-photo {
             position: absolute;
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
             background-size: cover;
             background-position: center;
-            border-radius: 15px; /* Deixa as fotos levemente arredondadas */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            animation: subir 25s linear infinite;
+            /* Formato de Coração */
+            clip-path: path('M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.06 3.06 6.06 12 14.125 8.94-8.065 12-10.065 12-14.125 0-8.165-10.011-8.967-12-3.568z');
+            transform: scale(5); /* Ajuste da escala do path */
+            animation: subirFoto 40s linear infinite; /* Fotos mais lentas */
             opacity: 0;
             z-index: 5;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        @keyframes subir {
+        /* Fallback caso o path seja complexo: usar máscara simples */
+        .heart-photo {
+            clip-path: polygon(50% 15%, 80% 0%, 100% 20%, 100% 50%, 50% 95%, 0% 50%, 0% 20%, 20% 0%);
+            border-radius: 0; 
+        }
+
+        @keyframes subirFoto {
             0% {
-                transform: translateY(110vh) rotate(0deg) scale(0.8);
+                transform: translateY(110vh) scale(0.7) rotate(-5deg);
                 opacity: 0;
             }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
             100% {
-                transform: translateY(-150vh) rotate(360deg) scale(1.1);
+                transform: translateY(-150vh) scale(1.1) rotate(5deg);
                 opacity: 0;
             }
         }
 
-        /* ================== EFEITO DE GRÃO ================== */
         #grain {
             pointer-events: none;
             position: absolute;
             width: 100%;
             height: 100%;
             background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-            opacity: 0.05;
+            opacity: 0.08;
             z-index: 200;
         }
     </style>
 </head>
-
 <body>
 
 <div id="scene">
@@ -160,54 +161,17 @@
 
     <div id="poem">
         <p>Eu te amo<br>do jeito que não sei explicar.</p>
-
-        <p>Não é um amor que cabe em palavras,<br>
-        nem em promessas,<br>
-        nem em textos bem escritos.</p>
-
-        <p>É um amor que mora no gesto pequeno,<br>
-        no cuidado silencioso,<br>
-        no ficar quando seria mais fácil ir.</p>
-
-        <p>Eu te amo todos os dias.<br>
-        Não só nos dias bons.</p>
-        
-        <p>Mas nos dias cansados,<br>
-        nos dias em que o mundo pesa,<br>
-        nos dias em que você não percebe<br>
-        o quanto é extraordinário.</p>
-
-        <p>Ser seu parceiro é um privilégio.<br>
-        É acordar grato.<br>
-        É entender que a vida faz mais sentido<br>
-        porque eu não caminho sozinho.</p>
-
-        <p>Se eu pudesse resumir tudo o que sinto,<br>
-        diria apenas isso:<br>
-        eu faria qualquer coisa<br>
-        para te ver feliz.</p>
-
+        <p>Não é um amor que cabe em palavras,<br>nem em promessas.</p>
+        <p>É um amor que mora no gesto pequeno,<br>no cuidado silencioso.</p>
+        <p>Eu te amo todos os dias.<br>Não só nos dias bons.</p>
+        <p>Mas nos dias cansados,<br>nos dias em que o mundo pesa.</p>
+        <p>Ser seu parceiro é um privilégio.<br>É acordar grato.</p>
+        <p>Eu faria qualquer coisa<br>para te ver feliz.</p>
         <p><strong>Qualquer coisa.</strong></p>
-
-        <p>Não porque eu preciso,<br>
-        mas porque o seu sorriso<br>
-        é um lugar onde eu descanso.</p>
-
-        <p>E se um dia você duvidar,<br>
-        se o medo falar mais alto,<br>
-        se o tempo tentar nos cansar,<br>
-        olhe para mim.</p>
-
+        <p>O seu sorriso<br>é um lugar onde eu descanso.</p>
         <p><strong>Eu estou aqui.</strong></p>
-
-        <p>Não por hábito.<br>
-        Não por conforto.<br>
-        Mas por escolha.</p>
-
-        <p><strong>Todos os dias.<br>
-        Sempre.</strong></p>
-
-        <p style="margin-top: 100px; font-size: 0.8rem;">❤️</p>
+        <p>Por escolha.<br>Todos os dias.<br>Sempre.</p>
+        <p style="font-size: 3rem;">💍</p>
     </div>
 
     <audio id="music" src="perfect.mp4"></audio>
@@ -220,7 +184,6 @@
     const poem = document.getElementById("poem");
     const music = document.getElementById("music");
 
-    /* Fugida do botão Não - Adaptado para toque também */
     const moveButton = () => {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -229,34 +192,27 @@
     };
 
     noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        moveButton();
-    });
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
 
-    /* Clique no Sim */
     yesBtn.onclick = () => {
         proposalBox.style.display = "none";
         music.play();
-
-        // Inicia a animação do poema
         poem.classList.add("poem-animate");
 
-        // Cria os corações com fotos após o Sim
+        // Gerar 13 fotos em corações
         for (let i = 1; i <= 13; i++) {
-            createHeart(i);
+            setTimeout(() => {
+                createHeartPhoto(i);
+            }, i * 3000); // Aparecem aos poucos
         }
     };
 
-    function createHeart(index) {
+    function createHeartPhoto(index) {
         const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.left = Math.random() * 70 + 10 + "%"; // Evita grudar nas bordas
-        heart.style.animationDelay = Math.random() * 15 + "s";
-        
-        // Tenta carregar a imagem, se não existir, fica um bloco cinza suave
-        heart.style.backgroundImage = `url(foto${index}.jpeg)`; 
-        
+        heart.className = "heart-photo";
+        heart.style.left = Math.random() * 70 + 5 + "%";
+        // Ajuste o nome da imagem aqui
+        heart.style.backgroundImage = `url(foto${index}.jpeg)`;
         document.getElementById("scene").appendChild(heart);
     }
 </script>
