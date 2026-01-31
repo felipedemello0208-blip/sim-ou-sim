@@ -22,15 +22,31 @@ body {
     color: #fff;
 }
 
+/* 🎥 Movimento de fundo */
 @keyframes fundo {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
+/* 🎞️ FILM GRAIN */
+#grain {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 50;
+    animation: grainMove 6s steps(10) infinite;
+}
+
+@keyframes grainMove {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(-10%, -10%); }
+}
+
 audio { display: none; }
 
-/* 💍 Pedido inicial */
+/* 💍 Pedido */
 #pedido {
     position: fixed;
     inset: 0;
@@ -72,10 +88,9 @@ button {
     background: linear-gradient(135deg, #9c3a4a, #c15c6b);
     color: #fff;
     z-index: 2;
-    position: relative;
 }
 
-/* NÃO fugindo sozinho */
+/* NÃO fugindo */
 #nao {
     background: #2a2a2a;
     color: #aaa;
@@ -113,7 +128,6 @@ button {
     height: 135px;
     object-fit: cover;
     border-radius: 18px;
-    filter: brightness(1.1) contrast(1.05);
     animation: zoomFoto 20s ease-in-out infinite;
 }
 
@@ -134,7 +148,7 @@ button {
     50% { transform: scale(1.2); }
 }
 
-/* 📝 Poema fluido */
+/* 📝 Poema */
 #poema {
     position: fixed;
     top: 50%;
@@ -147,7 +161,7 @@ button {
     line-height: 1.8;
     font-style: italic;
     z-index: 10;
-    animation: poemaSubir 65s linear forwards;
+    animation: poemaSubir 60s linear forwards;
     text-shadow: 0 8px 22px rgba(0,0,0,0.75);
 }
 
@@ -166,19 +180,21 @@ button {
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 8s;
+    transition: opacity 6s;
+    z-index: 30;
 }
 
 #final h2 {
-    font-size: 38px;
+    font-size: 36px;
     text-align: center;
-    padding: 0 8%;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 </style>
 </head>
 
 <body>
+
+<div id="grain"></div>
 
 <audio id="musica" src="perfect.mp4"></audio>
 
@@ -193,7 +209,10 @@ button {
 </div>
 
 <div id="final">
-    <h2>Quer passar o resto da vida comigo?</h2>
+    <h2>
+        Quer passar o resto da vida comigo?<br><br>
+        <span style="font-size:26px; opacity:.8;">Com amor,<br>Felipe</span>
+    </h2>
 </div>
 
 <script>
@@ -201,68 +220,64 @@ const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
 const musica = document.getElementById("musica");
 const nao = document.getElementById("nao");
 
-/* ❌ NÃO foge sozinho */
+/* NÃO fugindo */
 setInterval(() => {
-    const x = Math.random() * 180 - 90;
-    const y = Math.random() * 80 - 40;
-    nao.style.transform = `translate(${x}px, ${y}px)`;
+    nao.style.transform =
+        `translate(${Math.random()*180-90}px, ${Math.random()*80-40}px)`;
 }, 800);
 
-/* ❤️ Corações com controle */
+/* Corações controlados */
 function criarCoracao() {
     const c = document.createElement("div");
     c.className = "coracao";
-
     const img = document.createElement("img");
-    img.src = fotos[Math.floor(Math.random() * fotos.length)];
-
+    img.src = fotos[Math.floor(Math.random()*fotos.length)];
     c.appendChild(img);
 
-    const margem = 20;
-    c.style.left = margem + Math.random() * (window.innerWidth - 240 - margem) + "px";
-    c.style.animationDuration = (34 + Math.random() * 16) + "s";
-    c.style.setProperty("--scale", (0.8 + Math.random() * 0.6));
+    c.style.left = 20 + Math.random()*(window.innerWidth-260) + "px";
+    c.style.animationDuration = (34 + Math.random()*16) + "s";
+    c.style.setProperty("--scale", (0.8 + Math.random()*0.6));
 
     document.body.appendChild(c);
-    setTimeout(() => c.remove(), 60000);
+    setTimeout(()=>c.remove(), 60000);
 }
 
-/* 💍 Clique no SIM */
+/* SIM */
 document.getElementById("sim").onclick = () => {
     document.getElementById("pedido").remove();
-    musica.play();
 
     setInterval(criarCoracao, 4200);
 
-    const poema = document.createElement("div");
-    poema.id = "poema";
-    poema.innerHTML = `
-        Amor,<br><br>
-        O que existe entre nós<br>
-        não nasceu do acaso.<br><br>
+    /* 🎬 1s de silêncio antes do poema */
+    setTimeout(() => {
+        musica.play();
 
-        É escolha.<br>
-        É presença.<br>
-        É permanecer.<br><br>
+        const poema = document.createElement("div");
+        poema.id = "poema";
+        poema.innerHTML = `
+            Amor,<br><br>
+            O que existe entre nós<br>
+            não nasceu do acaso.<br><br>
 
-        Você é abrigo,<br>
-        é verdade,<br>
-        é onde eu descanso<br>
-        quando o mundo pesa.<br><br>
+            É escolha.<br>
+            É presença.<br>
+            É permanecer.<br><br>
 
-        Quero dividir os dias,<br>
-        os silêncios,<br>
-        os desafios,<br>
-        e tudo o que ainda virá.<br><br>
+            Você é abrigo,<br>
+            é verdade,<br>
+            é onde eu descanso<br>
+            quando o mundo pesa.<br><br>
 
-        Não por um momento.<br>
-        Mas por toda a vida.
-    `;
-    document.body.appendChild(poema);
+            Não por um momento.<br>
+            Mas por toda a vida.
+        `;
+        document.body.appendChild(poema);
+    }, 1000);
 
+    /* 🎬 2s de silêncio antes da frase final */
     setTimeout(() => {
         document.getElementById("final").style.opacity = 1;
-    }, 70000);
+    }, 65000);
 };
 </script>
 
