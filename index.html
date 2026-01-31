@@ -3,284 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedido Especial</title>
+<title>Amor da Minha Vida</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
 body {
-    font-family: "Georgia", serif;
-    background: linear-gradient(135deg, #4a2b34, #6a3b45, #3b4f6b);
-    background-size: 300% 300%;
-    animation: fundo 25s ease infinite;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Playfair Display', serif;
+    background: radial-gradient(circle at center, #6d2b3a, #2a0f16 70%);
     color: #fff;
 }
 
-/* 🎬 Fundo suave (sem vinheta) */
-@keyframes fundo {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 🎞️ Film Grain LIMPO */
-#grain {
+/* 🎞️ GRÃO DE FILME */
+body::after {
+    content: "";
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.08;
     pointer-events: none;
-    z-index: 40;
+    z-index: 10;
 }
 
-audio { display: none; }
-
-/* 💍 Pedido */
-#pedido {
+/* ❤️ CORAÇÕES */
+.hearts {
     position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    bottom: -150px;
+    width: var(--size);
+    height: var(--size);
+    background: rgba(180, 60, 90, 0.75);
+    transform: rotate(-45deg);
+    animation: subir linear forwards;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.heart::before { top: -50%; left: 0; }
+.heart::after { left: 50%; top: 0; }
+
+.heart img {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: 12px;
+    transform: rotate(45deg) scale(1);
+    top: 15%;
+    left: 15%;
+    animation: zoomFoto 20s ease-in-out forwards;
+}
+
+@keyframes zoomFoto {
+    from { transform: rotate(45deg) scale(1); }
+    to { transform: rotate(45deg) scale(1.15); }
+}
+
+@keyframes subir {
+    from { transform: translateY(0) rotate(-45deg); opacity: 1; }
+    to { transform: translateY(-140vh) rotate(-45deg); opacity: 0; }
+}
+
+/* 📦 CONTAINER INICIAL */
+.container {
+    position: absolute;
     inset: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 20;
+    align-items: center;
+    z-index: 3;
 }
 
-#pedidoBox {
-    width: 90%;
-    max-width: 420px;
+.box {
     background: rgba(0,0,0,0.55);
-    padding: 36px 28px;
-    border-radius: 26px;
+    padding: 30px 25px;
+    border-radius: 20px;
     text-align: center;
-    backdrop-filter: blur(10px);
+    max-width: 320px;
 }
 
-#pedidoBox h1 {
-    font-size: 28px;
-    margin-bottom: 32px;
+.box h1 {
+    font-size: 22px;
+    margin-bottom: 25px;
 }
 
-.botoes {
+.buttons {
     position: relative;
     height: 90px;
 }
 
 button {
-    font-size: 20px;
-    padding: 16px 42px;
-    border-radius: 40px;
+    padding: 12px 26px;
+    font-size: 18px;
     border: none;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-/* SIM */
 #sim {
-    background: linear-gradient(135deg, #b24b5a, #d46a79);
+    background: #4CAF50;
     color: #fff;
-    z-index: 2;
 }
 
-/* NÃO fugindo */
 #nao {
-    background: #2a2a2a;
-    color: #aaa;
+    background: #c0392b;
+    color: #fff;
     position: absolute;
-    left: 55%;
+    top: 0;
+    left: 120px;
 }
 
-/* ❤️ Corações (menos quantidade, mais espaço) */
-.coracao {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: linear-gradient(
-        135deg,
-        rgba(160,80,100,0.85),
-        rgba(90,130,170,0.85)
-    );
-    clip-path: polygon(
-        50% 92%,
-        0% 40%,
-        25% 10%,
-        50% 30%,
-        75% 10%,
-        100% 40%
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: subir linear infinite;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-}
-
-.coracao img {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 18px;
-    animation: zoomFoto 18s ease-in-out infinite;
-}
-
-/* Animações */
-@keyframes subir {
-    from {
-        transform: translateY(120vh) scale(var(--scale));
-        opacity: 0;
-    }
-    to {
-        transform: translateY(-140vh) scale(var(--scale));
-        opacity: 1;
-    }
-}
-
-@keyframes zoomFoto {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-}
-
-/* 📝 POEMA — FIXO, CENTRAL, SEM PULAR */
-#poema {
-    position: fixed;
-    left: 50%;
-    top: 100%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 700px;
-    text-align: center;
-    padding: 0 8%;
-    font-size: 34px;
-    line-height: 1.8;
-    font-style: italic;
-    animation: poemaSubir 60s linear forwards;
-    z-index: 10;
-    text-shadow: 0 6px 18px rgba(0,0,0,0.6);
-}
-
-@keyframes poemaSubir {
-    from { top: 100%; }
-    to { top: -200%; }
-}
-
-/* 🌑 Final */
-#final {
+/* 📜 POEMA */
+.poema {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.95);
     display: flex;
-    align-items: center;
     justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 6s;
-    z-index: 30;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+    z-index: 4;
 }
 
-#final h2 {
-    font-size: 36px;
-    text-align: center;
-    line-height: 1.5;
+.poema-texto {
+    font-size: 24px;
+    line-height: 1.8;
+    max-width: 700px;
+    animation: subirTexto 55s linear forwards;
+}
+
+@keyframes subirTexto {
+    from { transform: translateY(40%); opacity: 0; }
+    to { transform: translateY(-60%); opacity: 1; }
+}
+
+/* 📱 MOBILE */
+@media (max-width: 600px) {
+    .poema-texto {
+        font-size: 22px;
+        line-height: 1.9;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div id="grain"></div>
+<audio id="musica">
+    <source src="perfect.mp4" type="video/mp4">
+</audio>
 
-<audio id="musica" src="perfect.mp4"></audio>
+<div class="hearts"></div>
 
-<div id="pedido">
-    <div id="pedidoBox">
-        <h1>Quer casar comigo?</h1>
-        <div class="botoes">
-            <button id="sim">Sim</button>
+<div class="container" id="inicio">
+    <div class="box">
+        <h1>Quer passar a vida comigo?</h1>
+        <div class="buttons">
+            <button id="sim" onclick="aceitou()">Sim</button>
             <button id="nao">Não</button>
         </div>
     </div>
 </div>
 
-<div id="final">
-    <h2>
-        Quer passar o resto da vida comigo?<br><br>
-        <span style="font-size:26px; opacity:.8;">
-            Com amor,<br>Felipe
-        </span>
-    </h2>
-</div>
-
 <script>
-const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
-const musica = document.getElementById("musica");
+/* ❌ NÃO FOGE SOZINHO */
 const nao = document.getElementById("nao");
-
-/* NÃO fugindo automaticamente */
 setInterval(() => {
-    nao.style.transform =
-        `translate(${Math.random()*160-80}px, ${Math.random()*70-35}px)`;
-}, 900);
+    nao.style.left = Math.random() * 180 + "px";
+    nao.style.top = Math.random() * 40 + "px";
+}, 600);
 
-/* Corações espaçados */
+/* ❤️ CORAÇÕES */
+const fotos = Array.from({length: 13}, (_, i) => `${i+1}.jpeg`);
+const heartsContainer = document.querySelector(".hearts");
+
 function criarCoracao() {
-    const c = document.createElement("div");
-    c.className = "coracao";
+    const h = document.createElement("div");
+    h.className = "heart";
+    const size = 120 + Math.random() * 80;
+    h.style.setProperty("--size", size + "px");
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (18 + Math.random() * 10) + "s";
 
     const img = document.createElement("img");
-    img.src = fotos[Math.floor(Math.random()*fotos.length)];
-    c.appendChild(img);
+    img.src = fotos[Math.floor(Math.random() * fotos.length)];
+    h.appendChild(img);
 
-    c.style.left = 30 + Math.random()*(window.innerWidth-260) + "px";
-    c.style.animationDuration = (36 + Math.random()*18) + "s";
-    c.style.setProperty("--scale", (0.85 + Math.random()*0.5));
-
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(), 70000);
+    heartsContainer.appendChild(h);
+    setTimeout(() => h.remove(), 30000);
 }
 
-/* SIM */
-document.getElementById("sim").onclick = () => {
-    document.getElementById("pedido").remove();
+setInterval(criarCoracao, 2200);
 
-    setInterval(criarCoracao, 4500);
+/* ▶️ ACEITOU */
+function aceitou() {
+    document.getElementById("inicio").style.display = "none";
+    const musica = document.getElementById("musica");
+    musica.volume = 0.6;
+    musica.play();
 
-    /* 🎬 1s de silêncio antes do poema */
     setTimeout(() => {
-        musica.play();
-
         const poema = document.createElement("div");
-        poema.id = "poema";
+        poema.className = "poema";
         poema.innerHTML = `
-            Amor,<br><br>
-            O que existe entre nós<br>
-            não nasceu do acaso.<br><br>
+        <div class="poema-texto">
+            Eu te amo<br>
+            do jeito que não sei explicar.<br><br>
 
-            É escolha.<br>
-            É presença.<br>
-            É permanecer.<br><br>
+            Não é um amor que cabe em palavras,<br>
+            nem em promessas,<br>
+            nem em textos bem escritos.<br><br>
 
-            Você é abrigo,<br>
-            é verdade,<br>
-            é onde eu descanso<br>
-            quando o mundo pesa.<br><br>
+            É um amor que mora no gesto pequeno,<br>
+            no cuidado silencioso,<br>
+            no ficar quando seria mais fácil ir.<br><br>
 
-            Não por um momento.<br>
-            Mas por toda a vida.
-        `;
+            Eu te amo todos os dias.<br>
+            Não só nos dias bons.<br>
+            Mas nos dias cansados,<br>
+            nos dias em que o mundo pesa,<br>
+            nos dias em que você não percebe<br>
+            o quanto é extraordinário.<br><br>
+
+            Ser seu parceiro é um privilégio.<br>
+            É acordar grato.<br>
+            É entender que a vida faz mais sentido<br>
+            porque eu não caminho sozinho.<br><br>
+
+            Se eu pudesse resumir tudo o que sinto,<br>
+            diria apenas isso:<br>
+            eu faria qualquer coisa<br>
+            para te ver feliz.<br><br>
+
+            Qualquer coisa.<br><br>
+
+            Não porque eu preciso,<br>
+            mas porque o seu sorriso<br>
+            é um lugar onde eu descanso.<br><br>
+
+            E se um dia você duvidar,<br>
+            se o medo falar mais alto,<br>
+            se o tempo tentar nos cansar,<br>
+            olhe para mim.<br><br>
+
+            Eu estou aqui.<br><br>
+
+            Não por hábito.<br>
+            Não por conforto.<br>
+            Mas por escolha.<br><br>
+
+            Todos os dias.<br>
+            Sempre.
+        </div>`;
         document.body.appendChild(poema);
-    }, 1000);
-
-    /* 🎬 2s antes da frase final */
-    setTimeout(() => {
-        document.getElementById("final").style.opacity = 1;
-    }, 65000);
-};
+    }, 1000); // 1s de pausa
+}
 </script>
 
 </body>
