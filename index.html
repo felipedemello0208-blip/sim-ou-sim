@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>💍 Amor da Minha Vida</title>
 
-<!-- FONTE CURSIVA CINEMATOGRÁFICA -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -12,8 +11,8 @@ body {
     margin: 0;
     height: 100vh;
     background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    font-family: Arial, sans-serif;
     overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
 /* ===== CORAÇÕES ===== */
@@ -57,31 +56,14 @@ body {
     top: 12px;
     left: 12px;
 
-    border: 2px solid rgba(255,255,255,0.85);
+    border: 2px solid rgba(255,255,255,0.9);
     box-shadow: 0 6px 14px rgba(0,0,0,0.35);
-    filter: brightness(1.08) saturate(1.15);
-    animation: fotoPulse 3s ease-in-out infinite;
-}
-
-.heart span {
-    position: absolute;
-    transform: rotate(45deg);
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    bottom: 3px;
-    right: 6px;
+    filter: brightness(1.1) saturate(1.15);
 }
 
 @keyframes subir {
     from { transform: translateY(0) rotate(-45deg); opacity: 1; }
     to { transform: translateY(-140vh) rotate(-45deg); opacity: 0; }
-}
-
-@keyframes fotoPulse {
-    0%   { transform: rotate(45deg) scale(1); }
-    50%  { transform: rotate(45deg) scale(1.08); }
-    100% { transform: rotate(45deg) scale(1); }
 }
 
 /* ===== CONTAINER ===== */
@@ -99,9 +81,7 @@ body {
     text-align: center;
 }
 
-h1 {
-    color: #e60073;
-}
+h1 { color: #e60073; }
 
 .buttons {
     position: relative;
@@ -116,18 +96,14 @@ button {
     cursor: pointer;
 }
 
-#sim {
-    background: #4CAF50;
-    color: white;
-}
-
+#sim { background: #4CAF50; color: white; }
 #nao {
     background: #f44336;
     color: white;
     position: absolute;
 }
 
-/* ===== TEXTO ESTILO FILME ===== */
+/* ===== TEXTO CINEMATOGRÁFICO ===== */
 .poema-subindo {
     position: fixed;
     bottom: -150%;
@@ -139,39 +115,26 @@ button {
     z-index: 3;
     animation: textoSubir 55s linear forwards;
     padding: 60px 20px;
-    box-sizing: border-box;
 
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     text-align: center;
 }
 
-/* RESPONSIVO MOBILE */
 @media (max-width: 600px) {
     .poema-subindo {
         font-size: 30px;
         line-height: 2;
-        padding: 40px 15px;
     }
 }
 
 @keyframes textoSubir {
-    0% {
-        bottom: -150%;
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        bottom: 220%;
-        opacity: 0;
-    }
+    0% { bottom: -150%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { bottom: 220%; opacity: 0; }
 }
 </style>
 </head>
@@ -179,16 +142,14 @@ button {
 <body>
 
 <!-- 🎵 MÚSICA -->
-<audio id="musica" loop>
+<audio id="musica">
     <source src="perfect.mp4" type="audio/mp4">
 </audio>
 
-<!-- ❤️ CORAÇÕES -->
 <div class="hearts"></div>
 
 <div class="container" id="container">
     <h1>💖 Quer passar a vida comigo? 💖</h1>
-
     <div class="buttons">
         <button id="sim" onclick="aceitou()">Sim</button>
         <button id="nao">Não</button>
@@ -203,12 +164,48 @@ const container = document.getElementById("container");
 botaoNao.addEventListener("mouseover", () => {
     const c = container.getBoundingClientRect();
     const b = botaoNao.getBoundingClientRect();
-
-    botaoNao.style.left = Math.random() * (c.width - b.width - 20) + "px";
-    botaoNao.style.top = Math.random() * (c.height - b.height - 20) + "px";
+    botaoNao.style.left = Math.random() * (c.width - b.width) + "px";
+    botaoNao.style.top = Math.random() * (c.height - b.height) + "px";
 });
 
-/* ===== ACEITOU ===== */
+/* ===== FOTOS (APENAS JPEG — GARANTIDO) ===== */
+const fotos = [];
+for (let i = 1; i <= 13; i++) {
+    fotos.push(`foto${i}.jpeg`);
+}
+
+/* ===== PRÉ-CARREGAMENTO ===== */
+let fotosCarregadas = 0;
+fotos.forEach(src => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => fotosCarregadas++;
+});
+
+/* ===== CORAÇÕES ===== */
+const heartsContainer = document.querySelector(".hearts");
+
+function criarCoracao() {
+    if (fotosCarregadas < fotos.length) return;
+
+    const h = document.createElement("div");
+    h.className = "heart";
+
+    const img = document.createElement("img");
+    img.src = fotos[Math.floor(Math.random() * fotos.length)];
+
+    h.appendChild(img);
+    heartsContainer.appendChild(h);
+
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (8 + Math.random() * 6) + "s";
+
+    setTimeout(() => h.remove(), 15000);
+}
+
+setInterval(criarCoracao, 900);
+
+/* ===== ACEITOU (SINCRONIZADO COM O REFRÃO) ===== */
 function aceitou() {
     document.getElementById("container").style.display = "none";
 
@@ -216,60 +213,31 @@ function aceitou() {
     musica.volume = 0.6;
     musica.play();
 
-    const poema = document.createElement("div");
-    poema.className = "poema-subindo";
-    poema.innerHTML = `
-        Entre todos os caminhos,<br>
-        foi você que virou destino.<br><br>
+    // ⏱ REFRÃO DO PERFECT (~48s)
+    setTimeout(() => {
+        const poema = document.createElement("div");
+        poema.className = "poema-subindo";
+        poema.innerHTML = `
+            Entre todos os caminhos,<br>
+            foi você que virou destino.<br><br>
 
-        Você é o meu lar,<br>
-        mesmo quando o mundo pesa.<br><br>
+            Você é o meu lar,<br>
+            mesmo quando o mundo pesa.<br><br>
 
-        Quero dividir risos,<br>
-        silêncios, sonhos e desafios.<br><br>
+            Quero dividir risos,<br>
+            silêncios, sonhos e desafios.<br><br>
 
-        Quero passar <strong>cada segundo que me resta</strong><br>
-        ao seu lado,<br>
-        escolhendo você todos os dias.<br><br>
+            Quero passar <strong>cada segundo que me resta</strong><br>
+            ao seu lado,<br>
+            escolhendo você todos os dias.<br><br>
 
-        Porque você é,<br>
-        e sempre será,<br>
-        <strong>o amor da minha vida.</strong> 💍❤️
-    `;
-
-    document.body.appendChild(poema);
+            Porque você é,<br>
+            e sempre será,<br>
+            <strong>o amor da minha vida.</strong> 💍❤️
+        `;
+        document.body.appendChild(poema);
+    }, 48000); // 48 segundos
 }
-
-/* ===== CORAÇÕES COM FOTOS (.JPG OU .JPEG) ===== */
-const heartsContainer = document.querySelector(".hearts");
-const fotos = [];
-
-for (let i = 1; i <= 13; i++) {
-    fotos.push(`foto${i}.jpeg`);
-    fotos.push(`foto${i}.jpg`);
-}
-
-function criarCoracao() {
-    const h = document.createElement("div");
-    h.className = "heart";
-
-    const img = document.createElement("img");
-    img.src = fotos[Math.floor(Math.random() * fotos.length)];
-
-    const t = document.createElement("span");
-    t.innerText = "D+F";
-
-    h.appendChild(img);
-    h.appendChild(t);
-
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (8 + Math.random() * 6) + "s";
-
-    heartsContainer.appendChild(h);
-    setTimeout(() => h.remove(), 15000);
-}
-
-setInterval(criarCoracao, 900);
 </script>
 
 </body>
