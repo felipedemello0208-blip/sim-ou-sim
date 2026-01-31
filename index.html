@@ -16,9 +16,9 @@ body {
     height: 100vh;
     overflow: hidden;
     font-family: "Georgia", serif;
-    background: linear-gradient(135deg, #2c3e50, #6b2c3e, #1f1f1f);
+    background: linear-gradient(135deg, #2e4057, #6b2f3f, #222);
     background-size: 400% 400%;
-    animation: fundo 28s ease infinite;
+    animation: fundo 30s ease infinite;
     color: #fff;
 }
 
@@ -28,10 +28,9 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* 🎵 Música */
 audio { display: none; }
 
-/* 💍 Tela inicial */
+/* 💍 Pedido inicial */
 #pedido {
     position: fixed;
     inset: 0;
@@ -53,11 +52,9 @@ audio { display: none; }
 
 #pedidoBox h1 {
     font-size: 28px;
-    margin-bottom: 34px;
-    line-height: 1.3;
+    margin-bottom: 32px;
 }
 
-/* Botões */
 .botoes {
     position: relative;
     height: 90px;
@@ -74,8 +71,8 @@ button {
 #sim {
     background: linear-gradient(135deg, #9c3a4a, #c15c6b);
     color: #fff;
-    position: relative;
     z-index: 2;
+    position: relative;
 }
 
 /* NÃO fugindo sozinho */
@@ -84,18 +81,17 @@ button {
     color: #aaa;
     position: absolute;
     left: 55%;
-    top: 0;
 }
 
 /* ❤️ Corações */
 .coracao {
     position: absolute;
-    width: 240px;
-    height: 240px;
+    width: 210px;
+    height: 210px;
     background: linear-gradient(
         135deg,
-        rgba(156,58,74,0.9),
-        rgba(72,106,138,0.9)
+        rgba(150,60,80,0.85),
+        rgba(70,110,150,0.85)
     );
     clip-path: polygon(
         50% 92%,
@@ -109,53 +105,55 @@ button {
     align-items: center;
     justify-content: center;
     animation: subir linear infinite;
-    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.45);
 }
 
 .coracao img {
-    width: 150px;
-    height: 150px;
+    width: 135px;
+    height: 135px;
     object-fit: cover;
-    border-radius: 20px;
-    animation: zoomFoto 18s ease-in-out infinite;
-    filter: brightness(1.12) contrast(1.08);
+    border-radius: 18px;
+    filter: brightness(1.1) contrast(1.05);
+    animation: zoomFoto 20s ease-in-out infinite;
 }
 
-/* 🎥 Animações */
+/* Animações */
 @keyframes subir {
     from {
-        transform: translateY(130vh) scale(var(--scale));
+        transform: translateY(120vh) scale(var(--scale));
         opacity: 0;
     }
     to {
-        transform: translateY(-150vh) scale(var(--scale));
+        transform: translateY(-130vh) scale(var(--scale));
         opacity: 1;
     }
 }
 
 @keyframes zoomFoto {
     0%,100% { transform: scale(1); }
-    50% { transform: scale(1.22); }
+    50% { transform: scale(1.2); }
 }
 
-/* 📝 Poema */
+/* 📝 Poema fluido */
 #poema {
     position: fixed;
-    bottom: -140%;
+    top: 50%;
+    left: 50%;
     width: 100%;
+    transform: translate(-50%, 120%);
     text-align: center;
     padding: 0 10%;
     font-size: 34px;
     line-height: 1.8;
     font-style: italic;
     z-index: 10;
-    animation: poemaSubir 58s linear forwards;
+    animation: poemaSubir 65s linear forwards;
     text-shadow: 0 8px 22px rgba(0,0,0,0.75);
 }
 
 @keyframes poemaSubir {
-    from { bottom: -140%; }
-    to { bottom: 140%; }
+    from { transform: translate(-50%, 120%); }
+    to { transform: translate(-50%, -180%); }
 }
 
 /* 🌑 Final */
@@ -176,17 +174,14 @@ button {
     text-align: center;
     padding: 0 8%;
     line-height: 1.4;
-    letter-spacing: 1px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 Música -->
 <audio id="musica" src="perfect.mp4"></audio>
 
-<!-- 💍 Pedido -->
 <div id="pedido">
     <div id="pedidoBox">
         <h1>Quer casar comigo?</h1>
@@ -197,7 +192,6 @@ button {
     </div>
 </div>
 
-<!-- 🌑 Final -->
 <div id="final">
     <h2>Quer passar o resto da vida comigo?</h2>
 </div>
@@ -209,12 +203,12 @@ const nao = document.getElementById("nao");
 
 /* ❌ NÃO foge sozinho */
 setInterval(() => {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 120 - 60;
+    const x = Math.random() * 180 - 90;
+    const y = Math.random() * 80 - 40;
     nao.style.transform = `translate(${x}px, ${y}px)`;
-}, 650);
+}, 800);
 
-/* ❤️ Corações */
+/* ❤️ Corações com controle */
 function criarCoracao() {
     const c = document.createElement("div");
     c.className = "coracao";
@@ -223,9 +217,11 @@ function criarCoracao() {
     img.src = fotos[Math.floor(Math.random() * fotos.length)];
 
     c.appendChild(img);
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.animationDuration = (30 + Math.random() * 18) + "s";
-    c.style.setProperty("--scale", (0.85 + Math.random() * 1));
+
+    const margem = 20;
+    c.style.left = margem + Math.random() * (window.innerWidth - 240 - margem) + "px";
+    c.style.animationDuration = (34 + Math.random() * 16) + "s";
+    c.style.setProperty("--scale", (0.8 + Math.random() * 0.6));
 
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 60000);
@@ -236,28 +232,27 @@ document.getElementById("sim").onclick = () => {
     document.getElementById("pedido").remove();
     musica.play();
 
-    setInterval(criarCoracao, 3000);
+    setInterval(criarCoracao, 4200);
 
     const poema = document.createElement("div");
     poema.id = "poema";
     poema.innerHTML = `
         Amor,<br><br>
         O que existe entre nós<br>
-        não é acaso,<br>
-        é decisão.<br><br>
+        não nasceu do acaso.<br><br>
 
-        É ficar quando pesa,<br>
-        é segurar a mão<br>
-        quando o mundo aperta.<br><br>
+        É escolha.<br>
+        É presença.<br>
+        É permanecer.<br><br>
 
-        Você é casa,<br>
+        Você é abrigo,<br>
         é verdade,<br>
-        é a certeza tranquila<br>
-        de que eu pertenço.<br><br>
+        é onde eu descanso<br>
+        quando o mundo pesa.<br><br>
 
         Quero dividir os dias,<br>
         os silêncios,<br>
-        os desafios<br>
+        os desafios,<br>
         e tudo o que ainda virá.<br><br>
 
         Não por um momento.<br>
@@ -267,7 +262,7 @@ document.getElementById("sim").onclick = () => {
 
     setTimeout(() => {
         document.getElementById("final").style.opacity = 1;
-    }, 65000);
+    }, 70000);
 };
 </script>
 
