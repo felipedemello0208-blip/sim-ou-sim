@@ -2,191 +2,230 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Sempre</title>
+<title>Pedido Especial</title>
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
     font-family: "Georgia", serif;
 }
 
-/* FUNDO CINEMATOGRÁFICO */
 body {
-    background:
-        radial-gradient(circle at top, rgba(120,0,40,0.45), transparent 65%),
-        linear-gradient(180deg, #0b0b0b, #1a0f14, #0b0b0b);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    overflow: hidden;
+    height: 100vh;
+    color: #fff;
 }
 
-/* GRANULAÇÃO DE FILME */
-body::after {
-    content: "";
+/* 🎵 Música */
+audio {
+    display: none;
+}
+
+/* 💍 Caixa inicial */
+#pedido {
     position: fixed;
-    inset: 0;
-    background: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.08;
-    pointer-events: none;
-}
-
-/* TEXTO TIPO CRÉDITOS */
-#texto {
-    position: absolute;
-    bottom: -150%;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    padding: 30px 40px;
+    border-radius: 16px;
     text-align: center;
-    font-size: 2rem;
-    color: #f2f2f2;
-    line-height: 1.8;
-    padding: 0 24px;
-    animation: subirTexto 75s linear forwards;
-    z-index: 2;
-    font-style: italic;
-    text-shadow: 0 4px 14px rgba(0,0,0,0.7);
+    z-index: 20;
 }
 
-@keyframes subirTexto {
-    from { bottom: -150%; }
-    to { bottom: 130%; }
+#pedido h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
-/* CORAÇÕES GRANDES E LENTOS */
-.heart {
+.botoes {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+button {
+    font-size: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+#sim {
+    background: #7b1e2b;
+    color: #fff;
+}
+
+#nao {
+    background: #333;
+    color: #fff;
+    position: relative;
+}
+
+/* ❤️ Corações */
+.coracao {
     position: absolute;
-    bottom: -220px;
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(145deg, #7c1837, #4a0e22);
-    transform: rotate(-45deg);
-    animation: subir linear forwards;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.65);
-    opacity: 0.95;
+    width: 180px;
+    height: 180px;
+    background: #5b1420;
+    clip-path: polygon(
+        50% 90%,
+        0% 40%,
+        25% 10%,
+        50% 30%,
+        75% 10%,
+        100% 40%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: subir linear infinite;
 }
 
-.heart::before,
-.heart::after {
-    content: "";
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    background: inherit;
-    border-radius: 50%;
-}
-
-.heart::before {
-    top: -75px;
-    left: 0;
-}
-
-.heart::after {
-    left: 75px;
-    top: 0;
-}
-
-/* FOTO */
-.heart img {
-    position: absolute;
-    width: 100px;
-    height: 100px;
+/* 📷 Foto DENTRO do coração */
+.coracao img {
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     border-radius: 14px;
-    transform: rotate(45deg);
-    top: 25px;
-    left: 25px;
-    border: 2px solid rgba(255,255,255,0.85);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.75);
-    filter: contrast(1.05) brightness(1.05);
+    z-index: 2;
+    animation: zoomFoto 12s ease-in-out infinite;
 }
 
-/* SUBIDA BEM LENTA */
+/* 🎥 Animações */
 @keyframes subir {
     from {
-        transform: translateY(0) rotate(-45deg);
-        opacity: 1;
+        transform: translateY(110vh) scale(var(--scale));
+        opacity: 0;
     }
     to {
-        transform: translateY(-150vh) rotate(-45deg);
-        opacity: 0;
+        transform: translateY(-120vh) scale(var(--scale));
+        opacity: 1;
     }
 }
 
-/* MOBILE */
-@media (max-width: 600px) {
-    #texto {
-        font-size: 1.55rem;
-    }
+@keyframes zoomFoto {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ✨ Texto */
+#texto {
+    position: fixed;
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    opacity: 0;
+    animation: texto 30s ease forwards;
+}
+
+@keyframes texto {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* 🌑 Tela final */
+#final {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 6s;
+}
+
+#final h2 {
+    font-size: 40px;
+    text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<div id="texto">
-    Amor,<br><br>
-    O que existe entre nós<br>
-    não nasceu do acaso.<br><br>
-
-    É escolha.<br>
-    É parceria.<br>
-    É ficar, mesmo quando seria mais fácil ir.<br><br>
-
-    Você é o homem com quem eu divido o silêncio,<br>
-    a força, o riso e o cansaço.<br><br>
-
-    Não prometo um caminho perfeito.<br>
-    Prometo caminhar.<br><br>
-
-    Lado a lado.<br>
-    Todos os dias.<br><br>
-
-    Para sempre nós.
-</div>
-
+<!-- 🎵 Música -->
 <audio id="musica" src="perfect.mp4"></audio>
 
+<!-- 💍 Pedido inicial -->
+<div id="pedido">
+    <h1>Quer casar comigo?</h1>
+    <div class="botoes">
+        <button id="sim">Sim</button>
+        <button id="nao">Não</button>
+    </div>
+</div>
+
+<!-- ✨ Texto -->
+<div id="texto">
+    É difícil explicar…<br>
+    Mas você é o amor da minha vida.
+</div>
+
+<!-- 🌑 Final -->
+<div id="final">
+    <h2>Quer passar o resto da vida comigo?</h2>
+</div>
+
 <script>
-const fotos = [
-    "foto1.jpeg","foto2.jpeg","foto3.jpeg","foto4.jpeg","foto5.jpeg",
-    "foto6.jpeg","foto7.jpeg","foto8.jpeg","foto9.jpeg","foto10.jpeg",
-    "foto11.jpeg","foto12.jpeg","foto13.jpeg"
-];
+const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
+const musica = document.getElementById("musica");
+const nao = document.getElementById("nao");
+const pedido = document.getElementById("pedido");
 
+/* 🎵 Pular para o refrão */
+musica.currentTime = 45;
+
+/* ❌ Botão NÃO foge */
+document.addEventListener("mousemove", e => {
+    const r = nao.getBoundingClientRect();
+    if (
+        e.clientX > r.left - 40 &&
+        e.clientX < r.right + 40 &&
+        e.clientY > r.top - 40 &&
+        e.clientY < r.bottom + 40
+    ) {
+        nao.style.left = Math.random()*200 - 100 + "px";
+        nao.style.top = Math.random()*200 - 100 + "px";
+    }
+});
+
+/* ❤️ Criar corações */
 function criarCoracao() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-
+    const c = document.createElement("div");
+    c.className = "coracao";
     const img = document.createElement("img");
-    img.src = fotos[Math.floor(Math.random() * fotos.length)];
-    heart.appendChild(img);
+    img.src = fotos[Math.floor(Math.random()*fotos.length)];
+    c.appendChild(img);
 
-    heart.style.left = Math.random() * 80 + "vw";
-    heart.style.animationDuration = (14 + Math.random() * 6) + "s";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.animationDuration = (18 + Math.random()*10) + "s";
+    c.style.setProperty("--scale", (0.8 + Math.random()*0.6));
 
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 22000);
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 30000);
 }
 
-/* TOQUE PARA INICIAR — COMEÇA NO REFRÃO */
-document.body.addEventListener("click", () => {
-    const musica = document.getElementById("musica");
-
-    musica.currentTime = 48; // ⏱️ ajuste fino do refrão se quiser (ex: 45, 50, 52)
-    musica.volume = 0.85;
+/* 💍 Clique no SIM */
+document.getElementById("sim").onclick = () => {
+    pedido.remove();
     musica.play();
+    setInterval(criarCoracao, 2500);
 
-    setInterval(criarCoracao, 1200);
-}, { once: true });
+    setTimeout(()=>{
+        document.getElementById("final").style.opacity = 1;
+    }, 42000);
+};
 </script>
 
 </body>
