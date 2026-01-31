@@ -9,72 +9,89 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Georgia", serif;
 }
 
 body {
-    background: radial-gradient(circle at top, #1a1a1a, #000);
-    overflow: hidden;
     height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #263a4f, #5a2636, #1c1c1c);
+    background-size: 400% 400%;
+    animation: fundo 25s ease infinite;
     color: #fff;
+    font-family: "Georgia", serif;
+}
+
+@keyframes fundo {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* 🎵 Música */
-audio {
-    display: none;
-}
+audio { display: none; }
 
 /* 💍 Caixa inicial */
 #pedido {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0,0,0,0.7);
-    padding: 30px 40px;
-    border-radius: 16px;
-    text-align: center;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 20;
 }
 
-#pedido h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
+#pedidoBox {
+    background: rgba(0,0,0,0.55);
+    padding: 40px 50px;
+    border-radius: 24px;
+    text-align: center;
+    backdrop-filter: blur(10px);
 }
 
+#pedidoBox h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+/* Botões */
 .botoes {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
+    position: relative;
+    height: 80px;
 }
 
 button {
     font-size: 20px;
-    padding: 12px 30px;
+    padding: 14px 40px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
 }
 
+/* SIM */
 #sim {
-    background: #7b1e2b;
-    color: #fff;
-}
-
-#nao {
-    background: #333;
+    background: linear-gradient(135deg, #8b2e3c, #b44b5b);
     color: #fff;
     position: relative;
+    z-index: 2;
+}
+
+/* NÃO fugindo sozinho */
+#nao {
+    background: #2a2a2a;
+    color: #aaa;
+    position: absolute;
+    left: 160px;
+    top: 0;
 }
 
 /* ❤️ Corações */
 .coracao {
     position: absolute;
-    width: 180px;
-    height: 180px;
-    background: #5b1420;
+    width: 220px;
+    height: 220px;
+    background: linear-gradient(135deg, rgba(140,50,70,0.85), rgba(60,90,120,0.85));
     clip-path: polygon(
-        50% 90%,
+        50% 92%,
         0% 40%,
         25% 10%,
         50% 30%,
@@ -85,69 +102,72 @@ button {
     align-items: center;
     justify-content: center;
     animation: subir linear infinite;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.45);
 }
 
-/* 📷 Foto DENTRO do coração */
 .coracao img {
-    width: 90px;
-    height: 90px;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
-    border-radius: 14px;
-    z-index: 2;
-    animation: zoomFoto 12s ease-in-out infinite;
+    border-radius: 18px;
+    filter: brightness(1.1) contrast(1.05);
+    animation: zoomFoto 16s ease-in-out infinite;
 }
 
 /* 🎥 Animações */
 @keyframes subir {
     from {
-        transform: translateY(110vh) scale(var(--scale));
+        transform: translateY(120vh) scale(var(--scale));
         opacity: 0;
     }
     to {
-        transform: translateY(-120vh) scale(var(--scale));
+        transform: translateY(-140vh) scale(var(--scale));
         opacity: 1;
     }
 }
 
 @keyframes zoomFoto {
     0%,100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.18); }
 }
 
-/* ✨ Texto */
-#texto {
+/* 📝 Poema */
+#poema {
     position: fixed;
-    bottom: 10%;
+    bottom: -120%;
     width: 100%;
     text-align: center;
-    font-size: 28px;
-    opacity: 0;
-    animation: texto 30s ease forwards;
+    font-size: 38px;
+    line-height: 1.7;
+    font-style: italic;
+    padding: 0 8%;
+    z-index: 10;
+    animation: poemaSubir 45s linear forwards;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.7);
 }
 
-@keyframes texto {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
+@keyframes poemaSubir {
+    from { bottom: -120%; }
+    to { bottom: 120%; }
 }
 
-/* 🌑 Tela final */
+/* 🌑 Final */
 #final {
     position: fixed;
     inset: 0;
-    background: black;
+    background: rgba(0,0,0,0.95);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 6s;
+    transition: opacity 7s;
 }
 
 #final h2 {
-    font-size: 40px;
+    font-size: 46px;
     text-align: center;
+    letter-spacing: 1px;
 }
 </style>
 </head>
@@ -157,19 +177,15 @@ button {
 <!-- 🎵 Música -->
 <audio id="musica" src="perfect.mp4"></audio>
 
-<!-- 💍 Pedido inicial -->
+<!-- 💍 Pedido -->
 <div id="pedido">
-    <h1>Quer casar comigo?</h1>
-    <div class="botoes">
-        <button id="sim">Sim</button>
-        <button id="nao">Não</button>
+    <div id="pedidoBox">
+        <h1>Quer casar comigo?</h1>
+        <div class="botoes">
+            <button id="sim">Sim</button>
+            <button id="nao">Não</button>
+        </div>
     </div>
-</div>
-
-<!-- ✨ Texto -->
-<div id="texto">
-    É difícil explicar…<br>
-    Mas você é o amor da minha vida.
 </div>
 
 <!-- 🌑 Final -->
@@ -181,50 +197,65 @@ button {
 const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
 const musica = document.getElementById("musica");
 const nao = document.getElementById("nao");
-const pedido = document.getElementById("pedido");
 
-/* 🎵 Pular para o refrão */
-musica.currentTime = 45;
+/* ❌ NÃO foge sozinho */
+setInterval(() => {
+    const x = Math.random() * 260 - 130;
+    const y = Math.random() * 140 - 70;
+    nao.style.transform = `translate(${x}px, ${y}px)`;
+}, 700);
 
-/* ❌ Botão NÃO foge */
-document.addEventListener("mousemove", e => {
-    const r = nao.getBoundingClientRect();
-    if (
-        e.clientX > r.left - 40 &&
-        e.clientX < r.right + 40 &&
-        e.clientY > r.top - 40 &&
-        e.clientY < r.bottom + 40
-    ) {
-        nao.style.left = Math.random()*200 - 100 + "px";
-        nao.style.top = Math.random()*200 - 100 + "px";
-    }
-});
-
-/* ❤️ Criar corações */
+/* ❤️ Corações */
 function criarCoracao() {
     const c = document.createElement("div");
     c.className = "coracao";
-    const img = document.createElement("img");
-    img.src = fotos[Math.floor(Math.random()*fotos.length)];
-    c.appendChild(img);
 
-    c.style.left = Math.random()*100 + "vw";
-    c.style.animationDuration = (18 + Math.random()*10) + "s";
-    c.style.setProperty("--scale", (0.8 + Math.random()*0.6));
+    const img = document.createElement("img");
+    img.src = fotos[Math.floor(Math.random() * fotos.length)];
+
+    c.appendChild(img);
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = (26 + Math.random() * 16) + "s";
+    c.style.setProperty("--scale", (0.85 + Math.random() * 0.9));
 
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(), 30000);
+    setTimeout(() => c.remove(), 50000);
 }
 
 /* 💍 Clique no SIM */
 document.getElementById("sim").onclick = () => {
-    pedido.remove();
+    document.getElementById("pedido").remove();
     musica.play();
-    setInterval(criarCoracao, 2500);
 
-    setTimeout(()=>{
+    setInterval(criarCoracao, 2600);
+
+    const poema = document.createElement("div");
+    poema.id = "poema";
+    poema.innerHTML = `
+        Amor,<br><br>
+        O que construímos não é acaso,<br>
+        é escolha diária.<br><br>
+
+        É estar, mesmo quando o mundo pesa.<br>
+        É ficar, mesmo quando seria mais fácil ir.<br><br>
+
+        Você é abrigo, é verdade,<br>
+        é a certeza tranquila de que não estou só.<br><br>
+
+        Quero dividir o tempo,<br>
+        os silêncios,<br>
+        os desafios,<br>
+        e tudo o que ainda nem sabemos sonhar.<br><br>
+
+        Quero você ao meu lado,<br>
+        não por um momento,<br>
+        mas por toda a vida.
+    `;
+    document.body.appendChild(poema);
+
+    setTimeout(() => {
         document.getElementById("final").style.opacity = 1;
-    }, 42000);
+    }, 52000);
 };
 </script>
 
