@@ -2,242 +2,191 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>💍 Amor da Minha Vida</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Sempre</title>
 
 <style>
-body {
+* {
     margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* ===== CORAÇÕES ===== */
-.hearts {
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Georgia", serif;
+}
+
+/* FUNDO CINEMATOGRÁFICO */
+body {
+    background:
+        radial-gradient(circle at top, rgba(120,0,40,0.45), transparent 65%),
+        linear-gradient(180deg, #0b0b0b, #1a0f14, #0b0b0b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* GRANULAÇÃO DE FILME */
+body::after {
+    content: "";
     position: fixed;
     inset: 0;
+    background: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.08;
     pointer-events: none;
-    z-index: 1;
 }
 
+/* TEXTO TIPO CRÉDITOS */
+#texto {
+    position: absolute;
+    bottom: -150%;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: #f2f2f2;
+    line-height: 1.8;
+    padding: 0 24px;
+    animation: subirTexto 75s linear forwards;
+    z-index: 2;
+    font-style: italic;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.7);
+}
+
+@keyframes subirTexto {
+    from { bottom: -150%; }
+    to { bottom: 130%; }
+}
+
+/* CORAÇÕES GRANDES E LENTOS */
 .heart {
     position: absolute;
-    bottom: -120px;
-    width: 70px;
-    height: 70px;
-    background: #ff4d6d;
+    bottom: -220px;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(145deg, #7c1837, #4a0e22);
     transform: rotate(-45deg);
     animation: subir linear forwards;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.65);
+    opacity: 0.95;
 }
 
 .heart::before,
 .heart::after {
     content: "";
     position: absolute;
-    width: 70px;
-    height: 70px;
-    background: #ff4d6d;
+    width: 150px;
+    height: 150px;
+    background: inherit;
     border-radius: 50%;
 }
 
-.heart::before { top: -35px; left: 0; }
-.heart::after { left: 35px; top: 0; }
+.heart::before {
+    top: -75px;
+    left: 0;
+}
 
+.heart::after {
+    left: 75px;
+    top: 0;
+}
+
+/* FOTO */
 .heart img {
     position: absolute;
-    width: 46px;
-    height: 46px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 14px;
     transform: rotate(45deg);
-    top: 12px;
-    left: 12px;
-
-    border: 2px solid rgba(255,255,255,0.9);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
-    filter: brightness(1.1) saturate(1.15);
+    top: 25px;
+    left: 25px;
+    border: 2px solid rgba(255,255,255,0.85);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.75);
+    filter: contrast(1.05) brightness(1.05);
 }
 
+/* SUBIDA BEM LENTA */
 @keyframes subir {
-    from { transform: translateY(0) rotate(-45deg); opacity: 1; }
-    to { transform: translateY(-140vh) rotate(-45deg); opacity: 0; }
-}
-
-/* ===== CONTAINER ===== */
-.container {
-    position: relative;
-    z-index: 2;
-    max-width: 420px;
-    margin: auto;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.95);
-    padding: 35px;
-    border-radius: 22px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    text-align: center;
-}
-
-h1 { color: #e60073; }
-
-.buttons {
-    position: relative;
-    height: 110px;
-}
-
-button {
-    padding: 15px 32px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-#sim { background: #4CAF50; color: white; }
-#nao {
-    background: #f44336;
-    color: white;
-    position: absolute;
-}
-
-/* ===== TEXTO CINEMATOGRÁFICO ===== */
-.poema-subindo {
-    position: fixed;
-    bottom: -150%;
-    width: 100%;
-    color: white;
-    font-family: 'Great Vibes', cursive;
-    font-size: 42px;
-    line-height: 2.2;
-    z-index: 3;
-    animation: textoSubir 55s linear forwards;
-    padding: 60px 20px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    .poema-subindo {
-        font-size: 30px;
-        line-height: 2;
+    from {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-150vh) rotate(-45deg);
+        opacity: 0;
     }
 }
 
-@keyframes textoSubir {
-    0% { bottom: -150%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { bottom: 220%; opacity: 0; }
+/* MOBILE */
+@media (max-width: 600px) {
+    #texto {
+        font-size: 1.55rem;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 MÚSICA -->
-<audio id="musica">
-    <source src="perfect.mp4" type="audio/mp4">
-</audio>
+<div id="texto">
+    Amor,<br><br>
+    O que existe entre nós<br>
+    não nasceu do acaso.<br><br>
 
-<div class="hearts"></div>
+    É escolha.<br>
+    É parceria.<br>
+    É ficar, mesmo quando seria mais fácil ir.<br><br>
 
-<div class="container" id="container">
-    <h1>💖 Quer passar a vida comigo? 💖</h1>
-    <div class="buttons">
-        <button id="sim" onclick="aceitou()">Sim</button>
-        <button id="nao">Não</button>
-    </div>
+    Você é o homem com quem eu divido o silêncio,<br>
+    a força, o riso e o cansaço.<br><br>
+
+    Não prometo um caminho perfeito.<br>
+    Prometo caminhar.<br><br>
+
+    Lado a lado.<br>
+    Todos os dias.<br><br>
+
+    Para sempre nós.
 </div>
 
+<audio id="musica" src="perfect.mp4"></audio>
+
 <script>
-/* ===== BOTÃO NÃO FUGINDO ===== */
-const botaoNao = document.getElementById("nao");
-const container = document.getElementById("container");
-
-botaoNao.addEventListener("mouseover", () => {
-    const c = container.getBoundingClientRect();
-    const b = botaoNao.getBoundingClientRect();
-    botaoNao.style.left = Math.random() * (c.width - b.width) + "px";
-    botaoNao.style.top = Math.random() * (c.height - b.height) + "px";
-});
-
-/* ===== FOTOS (APENAS JPEG — GARANTIDO) ===== */
-const fotos = [];
-for (let i = 1; i <= 13; i++) {
-    fotos.push(`foto${i}.jpeg`);
-}
-
-/* ===== PRÉ-CARREGAMENTO ===== */
-let fotosCarregadas = 0;
-fotos.forEach(src => {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => fotosCarregadas++;
-});
-
-/* ===== CORAÇÕES ===== */
-const heartsContainer = document.querySelector(".hearts");
+const fotos = [
+    "foto1.jpeg","foto2.jpeg","foto3.jpeg","foto4.jpeg","foto5.jpeg",
+    "foto6.jpeg","foto7.jpeg","foto8.jpeg","foto9.jpeg","foto10.jpeg",
+    "foto11.jpeg","foto12.jpeg","foto13.jpeg"
+];
 
 function criarCoracao() {
-    if (fotosCarregadas < fotos.length) return;
-
-    const h = document.createElement("div");
-    h.className = "heart";
+    const heart = document.createElement("div");
+    heart.className = "heart";
 
     const img = document.createElement("img");
     img.src = fotos[Math.floor(Math.random() * fotos.length)];
+    heart.appendChild(img);
 
-    h.appendChild(img);
-    heartsContainer.appendChild(h);
+    heart.style.left = Math.random() * 80 + "vw";
+    heart.style.animationDuration = (14 + Math.random() * 6) + "s";
 
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (8 + Math.random() * 6) + "s";
+    document.body.appendChild(heart);
 
-    setTimeout(() => h.remove(), 15000);
+    setTimeout(() => heart.remove(), 22000);
 }
 
-setInterval(criarCoracao, 900);
-
-/* ===== ACEITOU (SINCRONIZADO COM O REFRÃO) ===== */
-function aceitou() {
-    document.getElementById("container").style.display = "none";
-
+/* TOQUE PARA INICIAR — COMEÇA NO REFRÃO */
+document.body.addEventListener("click", () => {
     const musica = document.getElementById("musica");
-    musica.volume = 0.6;
+
+    musica.currentTime = 48; // ⏱️ ajuste fino do refrão se quiser (ex: 45, 50, 52)
+    musica.volume = 0.85;
     musica.play();
 
-    // ⏱ REFRÃO DO PERFECT (~48s)
-    setTimeout(() => {
-        const poema = document.createElement("div");
-        poema.className = "poema-subindo";
-        poema.innerHTML = `
-            Entre todos os caminhos,<br>
-            foi você que virou destino.<br><br>
-
-            Você é o meu lar,<br>
-            mesmo quando o mundo pesa.<br><br>
-
-            Quero dividir risos,<br>
-            silêncios, sonhos e desafios.<br><br>
-
-            Quero passar <strong>cada segundo que me resta</strong><br>
-            ao seu lado,<br>
-            escolhendo você todos os dias.<br><br>
-
-            Porque você é,<br>
-            e sempre será,<br>
-            <strong>o amor da minha vida.</strong> 💍❤️
-        `;
-        document.body.appendChild(poema);
-    }, 48000); // 48 segundos
-}
+    setInterval(criarCoracao, 1200);
+}, { once: true });
 </script>
 
 </body>
