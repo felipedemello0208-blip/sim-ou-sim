@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>💍 Amor da Minha Vida</title>
 
+<!-- FONTE CURSIVA CINEMATOGRÁFICA -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
@@ -46,13 +49,18 @@ body {
 
 .heart img {
     position: absolute;
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 12px;
     transform: rotate(45deg);
-    top: 13px;
-    left: 13px;
+    top: 12px;
+    left: 12px;
+
+    border: 2px solid rgba(255,255,255,0.85);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+    filter: brightness(1.08) saturate(1.15);
+    animation: fotoPulse 3s ease-in-out infinite;
 }
 
 .heart span {
@@ -67,7 +75,13 @@ body {
 
 @keyframes subir {
     from { transform: translateY(0) rotate(-45deg); opacity: 1; }
-    to { transform: translateY(-130vh) rotate(-45deg); opacity: 0; }
+    to { transform: translateY(-140vh) rotate(-45deg); opacity: 0; }
+}
+
+@keyframes fotoPulse {
+    0%   { transform: rotate(45deg) scale(1); }
+    50%  { transform: rotate(45deg) scale(1.08); }
+    100% { transform: rotate(45deg) scale(1); }
 }
 
 /* ===== CONTAINER ===== */
@@ -113,23 +127,51 @@ button {
     position: absolute;
 }
 
-/* ===== TEXTO SUBINDO ===== */
+/* ===== TEXTO ESTILO FILME ===== */
 .poema-subindo {
     position: fixed;
-    bottom: -100%;
+    bottom: -150%;
     width: 100%;
-    text-align: center;
     color: white;
-    font-size: 20px;
-    line-height: 1.7;
+    font-family: 'Great Vibes', cursive;
+    font-size: 42px;
+    line-height: 2.2;
     z-index: 3;
-    animation: textoSubir 18s linear forwards;
-    padding: 40px;
+    animation: textoSubir 55s linear forwards;
+    padding: 60px 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* RESPONSIVO MOBILE */
+@media (max-width: 600px) {
+    .poema-subindo {
+        font-size: 30px;
+        line-height: 2;
+        padding: 40px 15px;
+    }
 }
 
 @keyframes textoSubir {
-    from { bottom: -100%; }
-    to { bottom: 120%; }
+    0% {
+        bottom: -150%;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 220%;
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -138,7 +180,7 @@ button {
 
 <!-- 🎵 MÚSICA -->
 <audio id="musica" loop>
-    <source src="perfect.mp3" type="audio/mpeg">
+    <source src="perfect.mp4" type="audio/mp4">
 </audio>
 
 <!-- ❤️ CORAÇÕES -->
@@ -154,7 +196,7 @@ button {
 </div>
 
 <script>
-/* ===== BOTÃO NÃO ===== */
+/* ===== BOTÃO NÃO FUGINDO ===== */
 const botaoNao = document.getElementById("nao");
 const container = document.getElementById("container");
 
@@ -198,9 +240,14 @@ function aceitou() {
     document.body.appendChild(poema);
 }
 
-/* ===== CORAÇÕES COM FOTOS ===== */
+/* ===== CORAÇÕES COM FOTOS (.JPG OU .JPEG) ===== */
 const heartsContainer = document.querySelector(".hearts");
-const fotos = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
+const fotos = [];
+
+for (let i = 1; i <= 13; i++) {
+    fotos.push(`foto${i}.jpeg`);
+    fotos.push(`foto${i}.jpg`);
+}
 
 function criarCoracao() {
     const h = document.createElement("div");
@@ -216,13 +263,13 @@ function criarCoracao() {
     h.appendChild(t);
 
     h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (6 + Math.random() * 4) + "s";
+    h.style.animationDuration = (8 + Math.random() * 6) + "s";
 
     heartsContainer.appendChild(h);
-    setTimeout(() => h.remove(), 10000);
+    setTimeout(() => h.remove(), 15000);
 }
 
-setInterval(criarCoracao, 700);
+setInterval(criarCoracao, 900);
 </script>
 
 </body>
