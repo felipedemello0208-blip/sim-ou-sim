@@ -12,36 +12,34 @@
     box-sizing: border-box;
 }
 
-body {
-    height: 100vh;
+html, body {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+}
+
+body {
     font-family: "Georgia", serif;
-    background: linear-gradient(135deg, #2e4057, #6b2f3f, #222);
-    background-size: 400% 400%;
-    animation: fundo 30s ease infinite;
+    background: linear-gradient(135deg, #4a2b34, #6a3b45, #3b4f6b);
+    background-size: 300% 300%;
+    animation: fundo 25s ease infinite;
     color: #fff;
 }
 
-/* 🎥 Movimento de fundo */
+/* 🎬 Fundo suave (sem vinheta) */
 @keyframes fundo {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* 🎞️ FILM GRAIN */
+/* 🎞️ Film Grain LIMPO */
 #grain {
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 50;
-    animation: grainMove 6s steps(10) infinite;
-}
-
-@keyframes grainMove {
-    0% { transform: translate(0,0); }
-    100% { transform: translate(-10%, -10%); }
+    z-index: 40;
 }
 
 audio { display: none; }
@@ -59,11 +57,11 @@ audio { display: none; }
 #pedidoBox {
     width: 90%;
     max-width: 420px;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.55);
     padding: 36px 28px;
     border-radius: 26px;
     text-align: center;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
 }
 
 #pedidoBox h1 {
@@ -85,7 +83,7 @@ button {
 
 /* SIM */
 #sim {
-    background: linear-gradient(135deg, #9c3a4a, #c15c6b);
+    background: linear-gradient(135deg, #b24b5a, #d46a79);
     color: #fff;
     z-index: 2;
 }
@@ -98,15 +96,15 @@ button {
     left: 55%;
 }
 
-/* ❤️ Corações */
+/* ❤️ Corações (menos quantidade, mais espaço) */
 .coracao {
     position: absolute;
-    width: 210px;
-    height: 210px;
+    width: 200px;
+    height: 200px;
     background: linear-gradient(
         135deg,
-        rgba(150,60,80,0.85),
-        rgba(70,110,150,0.85)
+        rgba(160,80,100,0.85),
+        rgba(90,130,170,0.85)
     );
     clip-path: polygon(
         50% 92%,
@@ -120,15 +118,15 @@ button {
     align-items: center;
     justify-content: center;
     animation: subir linear infinite;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
 }
 
 .coracao img {
-    width: 135px;
-    height: 135px;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
     border-radius: 18px;
-    animation: zoomFoto 20s ease-in-out infinite;
+    animation: zoomFoto 18s ease-in-out infinite;
 }
 
 /* Animações */
@@ -138,43 +136,44 @@ button {
         opacity: 0;
     }
     to {
-        transform: translateY(-130vh) scale(var(--scale));
+        transform: translateY(-140vh) scale(var(--scale));
         opacity: 1;
     }
 }
 
 @keyframes zoomFoto {
     0%,100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+    50% { transform: scale(1.15); }
 }
 
-/* 📝 Poema */
+/* 📝 POEMA — FIXO, CENTRAL, SEM PULAR */
 #poema {
     position: fixed;
-    top: 50%;
     left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
     width: 100%;
-    transform: translate(-50%, 120%);
+    max-width: 700px;
     text-align: center;
-    padding: 0 10%;
+    padding: 0 8%;
     font-size: 34px;
     line-height: 1.8;
     font-style: italic;
-    z-index: 10;
     animation: poemaSubir 60s linear forwards;
-    text-shadow: 0 8px 22px rgba(0,0,0,0.75);
+    z-index: 10;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.6);
 }
 
 @keyframes poemaSubir {
-    from { transform: translate(-50%, 120%); }
-    to { transform: translate(-50%, -180%); }
+    from { top: 100%; }
+    to { top: -200%; }
 }
 
 /* 🌑 Final */
 #final {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.96);
+    background: rgba(0,0,0,0.95);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,7 +210,9 @@ button {
 <div id="final">
     <h2>
         Quer passar o resto da vida comigo?<br><br>
-        <span style="font-size:26px; opacity:.8;">Com amor,<br>Felipe</span>
+        <span style="font-size:26px; opacity:.8;">
+            Com amor,<br>Felipe
+        </span>
     </h2>
 </div>
 
@@ -220,33 +221,34 @@ const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
 const musica = document.getElementById("musica");
 const nao = document.getElementById("nao");
 
-/* NÃO fugindo */
+/* NÃO fugindo automaticamente */
 setInterval(() => {
     nao.style.transform =
-        `translate(${Math.random()*180-90}px, ${Math.random()*80-40}px)`;
-}, 800);
+        `translate(${Math.random()*160-80}px, ${Math.random()*70-35}px)`;
+}, 900);
 
-/* Corações controlados */
+/* Corações espaçados */
 function criarCoracao() {
     const c = document.createElement("div");
     c.className = "coracao";
+
     const img = document.createElement("img");
     img.src = fotos[Math.floor(Math.random()*fotos.length)];
     c.appendChild(img);
 
-    c.style.left = 20 + Math.random()*(window.innerWidth-260) + "px";
-    c.style.animationDuration = (34 + Math.random()*16) + "s";
-    c.style.setProperty("--scale", (0.8 + Math.random()*0.6));
+    c.style.left = 30 + Math.random()*(window.innerWidth-260) + "px";
+    c.style.animationDuration = (36 + Math.random()*18) + "s";
+    c.style.setProperty("--scale", (0.85 + Math.random()*0.5));
 
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(), 60000);
+    setTimeout(()=>c.remove(), 70000);
 }
 
 /* SIM */
 document.getElementById("sim").onclick = () => {
     document.getElementById("pedido").remove();
 
-    setInterval(criarCoracao, 4200);
+    setInterval(criarCoracao, 4500);
 
     /* 🎬 1s de silêncio antes do poema */
     setTimeout(() => {
@@ -274,7 +276,7 @@ document.getElementById("sim").onclick = () => {
         document.body.appendChild(poema);
     }, 1000);
 
-    /* 🎬 2s de silêncio antes da frase final */
+    /* 🎬 2s antes da frase final */
     setTimeout(() => {
         document.getElementById("final").style.opacity = 1;
     }, 65000);
