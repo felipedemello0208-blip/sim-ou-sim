@@ -25,27 +25,27 @@
             overflow: hidden;
         }
 
-        /* ================== CAIXA DE PROPOSTA ================== */
+        /* ================== CAIXA DE PROPOSTA (FOCO NO CELULAR) ================== */
         #proposalBox {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(15px);
-            padding: 40px 25px;
-            border-radius: 15px;
+            padding: 35px 20px;
+            border-radius: 20px;
             text-align: center;
             z-index: 100;
             width: 85%;
-            max-width: 380px;
+            max-width: 320px;
             border: 1px solid rgba(241, 196, 15, 0.4);
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            box-shadow: 0 0 50px rgba(0,0,0,1);
         }
 
         #proposalBox h1 {
-            font-size: 1.7rem;
-            margin-bottom: 35px;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
             color: #f1c40f;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -53,10 +53,11 @@
 
         button {
             font-size: 1.1rem;
-            padding: 15px 40px;
-            margin: 10px;
+            padding: 18px 0;
+            margin: 10px 0;
+            width: 100%; /* Botões empilhados para facilitar o toque no celular */
             border: 1px solid #f1c40f;
-            border-radius: 4px;
+            border-radius: 12px;
             cursor: pointer;
             text-transform: uppercase;
             background: transparent;
@@ -64,72 +65,76 @@
             font-weight: bold;
         }
 
-        #yesBtn { background: #f1c40f; color: #0f172a; }
+        #yesBtn { background: #f1c40f; color: #0f172a; border: none; }
         
         #noBtn { 
             color: #475569; 
-            border-color: #1e293b; 
+            border-color: #334155; 
             position: absolute; 
             z-index: 101; 
             pointer-events: none; 
-            opacity: 0.7;
+            opacity: 0.6;
+            width: auto;
+            padding: 10px 30px;
         }
 
-        /* ================== TEXTO CRÉDITOS (AJUSTADO PARA CELULAR) ================== */
+        /* ================== TEXTO PARA LEITURA NO CELULAR ================== */
         #poem {
             position: absolute;
             width: 100%;
             left: 0;
             top: 100vh; 
             text-align: center;
-            font-size: 1.8rem; 
-            line-height: 2.2;
+            font-size: 1.6rem; /* Tamanho ideal para leitura mobile */
+            line-height: 2.3;
             padding: 0 25px;
             box-sizing: border-box;
-            z-index: 10;
+            z-index: 20; /* Texto acima de tudo */
             display: none;
+            text-shadow: 2px 2px 10px rgba(0,0,0,1);
         }
 
         #poem p { 
-            margin-bottom: 150px; /* Espaço entre parágrafos no celular */
+            margin-bottom: 120px; /* Espaço para o olho descansar entre frases */
         }
 
         #poem strong { 
             color: #f1c40f; 
-            font-size: 2.2rem; 
+            font-size: 2.1rem; 
             display: block; 
             margin-bottom: 15px; 
+            letter-spacing: 1px;
         }
 
         @keyframes subirPoema {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-1200%); } /* Ajustado para o conteúdo atual */
+            100% { transform: translateY(-1650%); }
         }
 
         .poem-animate {
             display: block !important;
-            /* 220 segundos = Aprox. 3.6 minutos. Ideal para leitura e música. */
-            animation: subirPoema 220s linear forwards;
+            /* 260 segundos = Ritmo ideal para ler sem pressa no celular enquanto a música toca */
+            animation: subirPoema 260s linear forwards;
         }
 
-        /* ================== FOTOS EM CORAÇÕES ================== */
+        /* ================== FOTOS (CENÁRIO) ================== */
         .heart-photo {
             position: absolute;
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             background-size: cover;
             background-position: center;
             clip-path: polygon(50% 15%, 80% 0%, 100% 20%, 100% 50%, 50% 95%, 0% 50%, 0% 20%, 20% 0%);
-            animation: subirFoto 45s linear infinite;
+            animation: subirFoto 60s linear infinite;
             opacity: 0;
             z-index: 5;
-            filter: brightness(0.8);
+            filter: brightness(0.6) contrast(1.1); /* Mais escuro para não atrapalhar a leitura do texto */
         }
 
         @keyframes subirFoto {
-            0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
-            20% { opacity: 0.6; }
-            80% { opacity: 0.6; }
+            0% { transform: translateY(110vh) scale(0.7); opacity: 0; }
+            15% { opacity: 0.4; }
+            85% { opacity: 0.4; }
             100% { transform: translateY(-200vh) scale(1.1); opacity: 0; }
         }
 
@@ -166,7 +171,7 @@
         <p><strong>Eu estou aqui, Nego.</strong></p>
         <p>Não por hábito...<br>mas por escolha.</p>
         <p>Todos os dias.<br>Para sempre.</p>
-        <p style="font-size: 4rem; margin-top: 50px;">💍</p>
+        <p style="font-size: 4rem; margin-top: 40px;">💍</p>
     </div>
 
     <audio id="music" src="perfect.mp4"></audio>
@@ -187,8 +192,8 @@
         noBtn.style.top = `${y}px`;
     }, 1300);
 
-    // Estrelas
-    for (let i = 0; i < 35; i++) {
+    // Pequenas estrelas para profundidade
+    for (let i = 0; i < 30; i++) {
         const star = document.createElement("div");
         star.className = "star";
         star.style.width = "1.5px"; star.style.height = "1.5px";
@@ -202,15 +207,17 @@
         music.play();
         poem.classList.add("poem-animate");
 
-        // Fotos aparecendo em intervalos de 7 segundos
-        for (let i = 1; i <= 13; i++) {
+        // Gerar 40 corações flutuantes (3x mais fotos como pedido)
+        for (let i = 1; i <= 40; i++) {
             setTimeout(() => {
                 const photo = document.createElement("div");
                 photo.className = "heart-photo";
-                photo.style.left = Math.random() * 65 + 10 + "%";
-                photo.style.backgroundImage = `url(foto${i}.jpeg)`;
+                photo.style.left = Math.random() * 70 + 5 + "%";
+                const photoNum = (i % 13) + 1;
+                photo.style.backgroundImage = `url(foto${photoNum}.jpeg)`;
+                photo.style.animationDuration = (55 + Math.random() * 15) + "s";
                 scene.appendChild(photo);
-            }, i * 7000); 
+            }, i * 3000); 
         }
     };
 </script>
