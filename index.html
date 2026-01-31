@@ -8,26 +8,24 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
     font-family: 'Playfair Display', serif;
-    background: radial-gradient(circle at center, #6d2b3a, #2a0f16 70%);
+    background: radial-gradient(circle at center, #7a3a4a, #3a141d 75%);
     color: #fff;
 }
 
-/* 🎞️ GRÃO DE FILME */
+/* 🎞️ FILM GRAIN */
 body::after {
     content: "";
     position: fixed;
     inset: 0;
     background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.08;
+    opacity: 0.07;
     pointer-events: none;
     z-index: 10;
 }
@@ -42,10 +40,10 @@ body::after {
 
 .heart {
     position: absolute;
-    bottom: -150px;
+    bottom: -160px;
     width: var(--size);
     height: var(--size);
-    background: rgba(180, 60, 90, 0.75);
+    background: rgba(200, 90, 120, 0.6);
     transform: rotate(-45deg);
     animation: subir linear forwards;
 }
@@ -65,27 +63,27 @@ body::after {
 
 .heart img {
     position: absolute;
-    width: 70%;
-    height: 70%;
+    width: 72%;
+    height: 72%;
     object-fit: cover;
-    border-radius: 12px;
-    transform: rotate(45deg) scale(1);
-    top: 15%;
-    left: 15%;
-    animation: zoomFoto 20s ease-in-out forwards;
+    border-radius: 14px;
+    transform: rotate(45deg);
+    top: 14%;
+    left: 14%;
+    animation: zoomFoto 22s ease-in-out forwards;
 }
 
 @keyframes zoomFoto {
     from { transform: rotate(45deg) scale(1); }
-    to { transform: rotate(45deg) scale(1.15); }
+    to { transform: rotate(45deg) scale(1.18); }
 }
 
 @keyframes subir {
     from { transform: translateY(0) rotate(-45deg); opacity: 1; }
-    to { transform: translateY(-140vh) rotate(-45deg); opacity: 0; }
+    to { transform: translateY(-145vh) rotate(-45deg); opacity: 0; }
 }
 
-/* 📦 CONTAINER INICIAL */
+/* 📦 CAIXA INICIAL */
 .container {
     position: absolute;
     inset: 0;
@@ -97,15 +95,15 @@ body::after {
 
 .box {
     background: rgba(0,0,0,0.55);
-    padding: 30px 25px;
+    padding: 32px 26px;
     border-radius: 20px;
     text-align: center;
-    max-width: 320px;
+    max-width: 330px;
 }
 
 .box h1 {
     font-size: 22px;
-    margin-bottom: 25px;
+    margin-bottom: 26px;
 }
 
 .buttons {
@@ -114,7 +112,7 @@ body::after {
 }
 
 button {
-    padding: 12px 26px;
+    padding: 12px 28px;
     font-size: 18px;
     border: none;
     border-radius: 10px;
@@ -131,7 +129,7 @@ button {
     color: #fff;
     position: absolute;
     top: 0;
-    left: 120px;
+    left: 130px;
 }
 
 /* 📜 POEMA */
@@ -140,29 +138,31 @@ button {
     inset: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 30px;
-    text-align: center;
     z-index: 4;
+    pointer-events: none;
 }
 
 .poema-texto {
+    position: absolute;
+    bottom: -100%;
     font-size: 24px;
-    line-height: 1.8;
-    max-width: 700px;
-    animation: subirTexto 55s linear forwards;
+    line-height: 1.9;
+    max-width: 720px;
+    text-align: center;
+    animation: subirTexto 60s linear forwards;
 }
 
 @keyframes subirTexto {
-    from { transform: translateY(40%); opacity: 0; }
-    to { transform: translateY(-60%); opacity: 1; }
+    from { bottom: -100%; }
+    to   { bottom: 120%; }
 }
 
 /* 📱 MOBILE */
 @media (max-width: 600px) {
     .poema-texto {
         font-size: 22px;
-        line-height: 1.9;
+        line-height: 2;
+        padding: 0 16px;
     }
 }
 </style>
@@ -192,37 +192,40 @@ const nao = document.getElementById("nao");
 setInterval(() => {
     nao.style.left = Math.random() * 180 + "px";
     nao.style.top = Math.random() * 40 + "px";
-}, 600);
+}, 500);
 
-/* ❤️ CORAÇÕES */
-const fotos = Array.from({length: 13}, (_, i) => `${i+1}.jpeg`);
+/* 📸 IMAGENS EXISTENTES */
+const fotos = ["1.jpeg","5.jpeg","7.jpeg","13.jpeg"];
 const heartsContainer = document.querySelector(".hearts");
 
 function criarCoracao() {
     const h = document.createElement("div");
     h.className = "heart";
-    const size = 120 + Math.random() * 80;
+
+    const size = 130 + Math.random() * 90;
     h.style.setProperty("--size", size + "px");
     h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (18 + Math.random() * 10) + "s";
+    h.style.animationDuration = (20 + Math.random() * 12) + "s";
 
     const img = document.createElement("img");
     img.src = fotos[Math.floor(Math.random() * fotos.length)];
     h.appendChild(img);
 
     heartsContainer.appendChild(h);
-    setTimeout(() => h.remove(), 30000);
+    setTimeout(() => h.remove(), 35000);
 }
 
-setInterval(criarCoracao, 2200);
+setInterval(criarCoracao, 2500);
 
 /* ▶️ ACEITOU */
 function aceitou() {
     document.getElementById("inicio").style.display = "none";
+
     const musica = document.getElementById("musica");
     musica.volume = 0.6;
     musica.play();
 
+    /* ⏱️ 2 SEGUNDOS DE RESPIRAÇÃO */
     setTimeout(() => {
         const poema = document.createElement("div");
         poema.className = "poema";
@@ -277,7 +280,7 @@ function aceitou() {
             Sempre.
         </div>`;
         document.body.appendChild(poema);
-    }, 1000); // 1s de pausa
+    }, 2000);
 }
 </script>
 
