@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pedido Especial</title>
 
 <style>
@@ -14,11 +15,11 @@
 body {
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #263a4f, #5a2636, #1c1c1c);
-    background-size: 400% 400%;
-    animation: fundo 25s ease infinite;
-    color: #fff;
     font-family: "Georgia", serif;
+    background: linear-gradient(135deg, #2c3e50, #6b2c3e, #1f1f1f);
+    background-size: 400% 400%;
+    animation: fundo 28s ease infinite;
+    color: #fff;
 }
 
 @keyframes fundo {
@@ -30,7 +31,7 @@ body {
 /* 🎵 Música */
 audio { display: none; }
 
-/* 💍 Caixa inicial */
+/* 💍 Tela inicial */
 #pedido {
     position: fixed;
     inset: 0;
@@ -41,35 +42,37 @@ audio { display: none; }
 }
 
 #pedidoBox {
-    background: rgba(0,0,0,0.55);
-    padding: 40px 50px;
-    border-radius: 24px;
+    width: 90%;
+    max-width: 420px;
+    background: rgba(0,0,0,0.6);
+    padding: 36px 28px;
+    border-radius: 26px;
     text-align: center;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
 }
 
 #pedidoBox h1 {
-    font-size: 32px;
-    margin-bottom: 30px;
+    font-size: 28px;
+    margin-bottom: 34px;
+    line-height: 1.3;
 }
 
 /* Botões */
 .botoes {
     position: relative;
-    height: 80px;
+    height: 90px;
 }
 
 button {
     font-size: 20px;
-    padding: 14px 40px;
+    padding: 16px 42px;
+    border-radius: 40px;
     border: none;
-    border-radius: 30px;
-    cursor: pointer;
 }
 
 /* SIM */
 #sim {
-    background: linear-gradient(135deg, #8b2e3c, #b44b5b);
+    background: linear-gradient(135deg, #9c3a4a, #c15c6b);
     color: #fff;
     position: relative;
     z-index: 2;
@@ -80,16 +83,20 @@ button {
     background: #2a2a2a;
     color: #aaa;
     position: absolute;
-    left: 160px;
+    left: 55%;
     top: 0;
 }
 
 /* ❤️ Corações */
 .coracao {
     position: absolute;
-    width: 220px;
-    height: 220px;
-    background: linear-gradient(135deg, rgba(140,50,70,0.85), rgba(60,90,120,0.85));
+    width: 240px;
+    height: 240px;
+    background: linear-gradient(
+        135deg,
+        rgba(156,58,74,0.9),
+        rgba(72,106,138,0.9)
+    );
     clip-path: polygon(
         50% 92%,
         0% 40%,
@@ -102,71 +109,73 @@ button {
     align-items: center;
     justify-content: center;
     animation: subir linear infinite;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
 }
 
 .coracao img {
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    border-radius: 18px;
-    filter: brightness(1.1) contrast(1.05);
-    animation: zoomFoto 16s ease-in-out infinite;
+    border-radius: 20px;
+    animation: zoomFoto 18s ease-in-out infinite;
+    filter: brightness(1.12) contrast(1.08);
 }
 
 /* 🎥 Animações */
 @keyframes subir {
     from {
-        transform: translateY(120vh) scale(var(--scale));
+        transform: translateY(130vh) scale(var(--scale));
         opacity: 0;
     }
     to {
-        transform: translateY(-140vh) scale(var(--scale));
+        transform: translateY(-150vh) scale(var(--scale));
         opacity: 1;
     }
 }
 
 @keyframes zoomFoto {
     0%,100% { transform: scale(1); }
-    50% { transform: scale(1.18); }
+    50% { transform: scale(1.22); }
 }
 
 /* 📝 Poema */
 #poema {
     position: fixed;
-    bottom: -120%;
+    bottom: -140%;
     width: 100%;
     text-align: center;
-    font-size: 38px;
-    line-height: 1.7;
+    padding: 0 10%;
+    font-size: 34px;
+    line-height: 1.8;
     font-style: italic;
-    padding: 0 8%;
     z-index: 10;
-    animation: poemaSubir 45s linear forwards;
-    text-shadow: 0 6px 18px rgba(0,0,0,0.7);
+    animation: poemaSubir 58s linear forwards;
+    text-shadow: 0 8px 22px rgba(0,0,0,0.75);
 }
 
 @keyframes poemaSubir {
-    from { bottom: -120%; }
-    to { bottom: 120%; }
+    from { bottom: -140%; }
+    to { bottom: 140%; }
 }
 
 /* 🌑 Final */
 #final {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0,0,0,0.96);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 7s;
+    transition: opacity 8s;
 }
 
 #final h2 {
-    font-size: 46px;
+    font-size: 38px;
     text-align: center;
+    padding: 0 8%;
+    line-height: 1.4;
     letter-spacing: 1px;
 }
 </style>
@@ -200,10 +209,10 @@ const nao = document.getElementById("nao");
 
 /* ❌ NÃO foge sozinho */
 setInterval(() => {
-    const x = Math.random() * 260 - 130;
-    const y = Math.random() * 140 - 70;
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 120 - 60;
     nao.style.transform = `translate(${x}px, ${y}px)`;
-}, 700);
+}, 650);
 
 /* ❤️ Corações */
 function criarCoracao() {
@@ -215,11 +224,11 @@ function criarCoracao() {
 
     c.appendChild(img);
     c.style.left = Math.random() * 100 + "vw";
-    c.style.animationDuration = (26 + Math.random() * 16) + "s";
-    c.style.setProperty("--scale", (0.85 + Math.random() * 0.9));
+    c.style.animationDuration = (30 + Math.random() * 18) + "s";
+    c.style.setProperty("--scale", (0.85 + Math.random() * 1));
 
     document.body.appendChild(c);
-    setTimeout(() => c.remove(), 50000);
+    setTimeout(() => c.remove(), 60000);
 }
 
 /* 💍 Clique no SIM */
@@ -227,35 +236,38 @@ document.getElementById("sim").onclick = () => {
     document.getElementById("pedido").remove();
     musica.play();
 
-    setInterval(criarCoracao, 2600);
+    setInterval(criarCoracao, 3000);
 
     const poema = document.createElement("div");
     poema.id = "poema";
     poema.innerHTML = `
         Amor,<br><br>
-        O que construímos não é acaso,<br>
-        é escolha diária.<br><br>
+        O que existe entre nós<br>
+        não é acaso,<br>
+        é decisão.<br><br>
 
-        É estar, mesmo quando o mundo pesa.<br>
-        É ficar, mesmo quando seria mais fácil ir.<br><br>
+        É ficar quando pesa,<br>
+        é segurar a mão<br>
+        quando o mundo aperta.<br><br>
 
-        Você é abrigo, é verdade,<br>
-        é a certeza tranquila de que não estou só.<br><br>
+        Você é casa,<br>
+        é verdade,<br>
+        é a certeza tranquila<br>
+        de que eu pertenço.<br><br>
 
-        Quero dividir o tempo,<br>
+        Quero dividir os dias,<br>
         os silêncios,<br>
-        os desafios,<br>
-        e tudo o que ainda nem sabemos sonhar.<br><br>
+        os desafios<br>
+        e tudo o que ainda virá.<br><br>
 
-        Quero você ao meu lado,<br>
-        não por um momento,<br>
-        mas por toda a vida.
+        Não por um momento.<br>
+        Mas por toda a vida.
     `;
     document.body.appendChild(poema);
 
     setTimeout(() => {
         document.getElementById("final").style.opacity = 1;
-    }, 52000);
+    }, 65000);
 };
 </script>
 
