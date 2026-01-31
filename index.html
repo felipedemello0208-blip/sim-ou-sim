@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Para Sempre</title>
+    <title>Para o meu Nego</title>
 
     <style>
         html, body {
@@ -13,8 +13,7 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            /* Paleta Sóbria: Azul Profundo e Cinza Escuro */
-            background: linear-gradient(180deg, #1a1a2e, #16213e);
+            background: linear-gradient(180deg, #0f172a, #1e293b);
             touch-action: manipulation;
             color: #ffffff;
         }
@@ -32,22 +31,22 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
             padding: 40px 20px;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
             z-index: 100;
             width: 85%;
             max-width: 350px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
         #proposalBox h1 {
             font-size: 1.6rem;
             margin-bottom: 30px;
-            color: #e9c46a; /* Dourado */
+            color: #f1c40f; /* Dourado vibrante */
             font-weight: 300;
             letter-spacing: 2px;
         }
@@ -57,28 +56,26 @@
             padding: 15px 35px;
             margin: 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: bold;
             transition: all 0.3s;
         }
 
         #yesBtn {
-            background: #e9c46a;
-            color: #1a1a2e;
-            font-weight: bold;
+            background: #f1c40f;
+            color: #0f172a;
         }
 
         #noBtn {
-            background: #444;
-            color: #bbb;
+            background: #334155;
+            color: #94a3b8;
             position: absolute;
             z-index: 101;
-            opacity: 0.8;
         }
 
-        /* ================== TEXTO POEMA (EXTREMAMENTE LENTO) ================== */
+        /* ================== TEXTO POEMA (MUITO LENTO) ================== */
         #poem {
             position: absolute;
             width: 100%;
@@ -90,76 +87,69 @@
             padding: 40px 20px;
             box-sizing: border-box;
             z-index: 10;
-            color: #f1f1f1;
+            color: #f8fafc;
             display: none;
         }
 
         #poem p {
-            margin-bottom: 120px;
+            margin-bottom: 130px;
             font-weight: 300;
         }
 
         #poem strong {
-            color: #e9c46a;
+            color: #f1c40f;
             font-weight: 600;
         }
 
         @keyframes subirPoema {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-700%); }
+            100% { transform: translateY(-800%); }
         }
 
         .poem-animate {
             display: block !important;
-            /* 240 segundos = 4 minutos de subida */
-            animation: subirPoema 240s linear forwards;
+            animation: subirPoema 250s linear forwards;
         }
 
-        /* ================== FOTOS EM CORAÇÕES SÓBRIOS ================== */
+        /* ================== FOTOS EM CORAÇÕES ================== */
         .heart-photo {
             position: absolute;
-            width: 140px;
-            height: 140px;
+            width: 150px;
+            height: 150px;
             background-size: cover;
             background-position: center;
-            /* Formato de coração mais limpo */
             clip-path: polygon(50% 15%, 80% 0%, 100% 20%, 100% 50%, 50% 95%, 0% 50%, 0% 20%, 20% 0%);
-            animation: subirFoto 50s linear infinite;
+            animation: subirFoto 55s linear infinite;
             opacity: 0;
             z-index: 5;
-            filter: grayscale(20%) brightness(0.9);
-            border: 1px solid rgba(233, 196, 106, 0.3);
+            border: 2px solid #f1c40f;
         }
 
         @keyframes subirFoto {
-            0% {
-                transform: translateY(110vh) scale(0.8);
-                opacity: 0;
-            }
-            15% { opacity: 0.6; }
-            85% { opacity: 0.6; }
-            100% {
-                transform: translateY(-180vh) scale(1.1);
-                opacity: 0;
-            }
+            0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
+            15% { opacity: 0.7; }
+            85% { opacity: 0.7; }
+            100% { transform: translateY(-200vh) scale(1.1); opacity: 0; }
         }
 
-        #grain {
-            pointer-events: none;
+        /* ================== ESTRELAS ================== */
+        .star {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-            opacity: 0.03;
-            z-index: 200;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
 <div id="scene">
-    <div id="grain"></div>
-
     <div id="proposalBox">
         <h1>Quer casar comigo?</h1>
         <button id="yesBtn">Sim</button>
@@ -167,18 +157,38 @@
     </div>
 
     <div id="poem">
-        <p>Eu te amo<br>do jeito que não sei explicar.</p>
-        <p>Não é um amor que cabe em palavras,<br>nem em promessas.</p>
-        <p>É um amor que mora no gesto pequeno,<br>no cuidado silencioso.</p>
-        <p>Eu te amo todos os dias.<br>Não só nos dias bons.</p>
-        <p>Mas nos dias cansados,<br>nos dias em que o mundo pesa.</p>
-        <p>Ser seu parceiro é um privilégio.<br>É acordar grato.</p>
-        <p>Eu faria qualquer coisa<br>para te ver feliz.</p>
-        <p><strong>Qualquer coisa.</strong></p>
-        <p>O seu sorriso<br>é um lugar onde eu descanso.</p>
-        <p><strong>Eu estou aqui.</strong></p>
-        <p>Por escolha.<br>Todos os dias.<br>Sempre.</p>
-        <p style="font-size: 2rem; color: #e9c46a;">💍</p>
+        <p>Oi, meu <strong>Nego</strong>...</p>
+        
+        <p>Eu te amo do jeito que não sei explicar.<br>
+        Não é um amor que cabe em palavras.</p>
+
+        <p>É um amor que mora no som da nossa risada,<br>
+        e até naquelas vezes em que eu te imito<br>
+        só pra te ver fazer aquela cara que eu adoro.</p>
+
+        <p>Eu sei que você reclama quando eu te mordo,<br>
+        mas é que é impossível resistir...<br>
+        é o meu jeito (meio torto) de dizer que te quero por perto.</p>
+
+        <p>Eu te amo todos os dias.<br>
+        Até quando estamos cansados e o mundo pesa.</p>
+
+        <p>Ser seu parceiro é o maior privilégio da minha vida.<br>
+        É entender que a vida faz sentido<br>
+        porque eu não caminho sozinho.</p>
+
+        <p>Eu faria qualquer coisa para te ver feliz.<br>
+        <strong>Qualquer coisa mesmo.</strong></p>
+
+        <p>O seu sorriso é o lugar onde eu descanso.<br>
+        É o meu lar.</p>
+
+        <p><strong>Eu estou aqui, Nego.</strong></p>
+
+        <p>Não por hábito, mas por escolha.<br>
+        Todos os dias. Para sempre.</p>
+
+        <p style="font-size: 3rem;">💍</p>
     </div>
 
     <audio id="music" src="perfect.mp4"></audio>
@@ -191,42 +201,43 @@
     const poem = document.getElementById("poem");
     const music = document.getElementById("music");
 
-    /* Fugida AUTOMÁTICA do botão Não */
+    // Fugida AUTOMÁTICA do botão Não
     function moveNoButton() {
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
         noBtn.style.left = `${x}px`;
         noBtn.style.top = `${y}px`;
     }
+    let noMovement = setInterval(moveNoButton, 1200);
 
-    // Move sozinho a cada 1 segundo para mostrar que é inacessível
-    let noMovement = setInterval(moveNoButton, 1000);
-
-    // Também foge se tentar chegar perto (mouse ou toque)
-    noBtn.addEventListener("mouseover", moveNoButton);
-    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoButton(); });
+    // Criar estrelas no fundo
+    for (let i = 0; i < 50; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.width = Math.random() * 3 + "px";
+        star.style.height = star.style.width;
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 5 + "s";
+        document.getElementById("scene").appendChild(star);
+    }
 
     yesBtn.onclick = () => {
-        clearInterval(noMovement); // Para de mover o botão
+        clearInterval(noMovement);
         proposalBox.style.display = "none";
         music.play();
         poem.classList.add("poem-animate");
 
-        // Gerar 13 fotos em corações
         for (let i = 1; i <= 13; i++) {
             setTimeout(() => {
-                createHeartPhoto(i);
-            }, i * 4500); // Aparecem bem espaçadas
+                const heart = document.createElement("div");
+                heart.className = "heart-photo";
+                heart.style.left = Math.random() * 75 + 5 + "%";
+                heart.style.backgroundImage = `url(foto${i}.jpeg)`;
+                document.getElementById("scene").appendChild(heart);
+            }, i * 5000); 
         }
     };
-
-    function createHeartPhoto(index) {
-        const heart = document.createElement("div");
-        heart.className = "heart-photo";
-        heart.style.left = Math.random() * 70 + 5 + "%";
-        heart.style.backgroundImage = `url(foto${index}.jpeg)`;
-        document.getElementById("scene").appendChild(heart);
-    }
 </script>
 
 </body>
