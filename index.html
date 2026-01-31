@@ -1,128 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Sempre</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Sempre</title>
 
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    background: linear-gradient(180deg, #f2f2f2, #dcdcdc);
-}
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(180deg, #f2f2f2, #dcdcdc);
+            touch-action: manipulation;
+        }
 
-/* ================== FUNDO CINEMATOGRÁFICO ================== */
-#scene {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
+        /* ================== FUNDO E CENA ================== */
+        #scene {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-/* ================== BOTÕES ================== */
-#proposalBox {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255,255,255,0.85);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    z-index: 10;
-}
+        /* ================== CAIXA DE PROPOSTA ================== */
+        #proposalBox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 100;
+            width: 80%;
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
 
-#proposalBox h1 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-}
+        #proposalBox h1 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #333;
+        }
 
-button {
-    font-size: 1.2rem;
-    padding: 12px 24px;
-    margin: 10px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-}
+        button {
+            font-size: 1.1rem;
+            padding: 12px 28px;
+            margin: 10px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-#yesBtn {
-    background: #111;
-    color: #fff;
-}
+        #yesBtn {
+            background: #111;
+            color: #fff;
+        }
 
-#noBtn {
-    background: #aaa;
-    color: #fff;
-    position: absolute;
-}
+        #noBtn {
+            background: #aaa;
+            color: #fff;
+            position: absolute;
+            transition: all 0.2s ease;
+            z-index: 101;
+        }
 
-/* ================== TEXTO POEMA ================== */
-#poem {
-    position: absolute;
-    width: 100%;
-    bottom: -100vh; /* COMEÇA FORA DA TELA */
-    text-align: center;
-    font-size: 2rem;
-    line-height: 1.6;
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 5;
-}
+        /* ================== TEXTO POEMA (SUBIDA) ================== */
+        #poem {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            /* Começa totalmente fora da tela (abaixo) */
+            top: 100vh; 
+            text-align: center;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 10;
+            color: #222;
+            display: none; /* Só aparece após o Sim */
+        }
 
-/* animação REAL */
-@keyframes subirPoema {
-    from {
-        bottom: -120vh;
-    }
-    to {
-        bottom: 120vh;
-    }
-}
+        #poem p {
+            margin-bottom: 50px;
+        }
 
-.poem-animate {
-    animation: subirPoema 90s linear forwards;
-}
+        /* Animação de subida */
+        @keyframes subirPoema {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                /* Sobe o suficiente para passar por toda a tela */
+                transform: translateY(-400%); 
+            }
+        }
 
-/* ================== CORAÇÕES ================== */
-.heart {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background-size: cover;
-    animation: subir 30s linear infinite;
-    opacity: 0.8;
-}
+        .poem-animate {
+            display: block !important;
+            animation: subirPoema 75s linear forwards;
+        }
 
-@keyframes subir {
-    from {
-        transform: translateY(110vh) scale(0.8);
-    }
-    to {
-        transform: translateY(-130vh) scale(1.1);
-    }
-}
+        /* ================== CORAÇÕES COM FOTOS ================== */
+        .heart {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px; /* Deixa as fotos levemente arredondadas */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: subir 25s linear infinite;
+            opacity: 0;
+            z-index: 5;
+        }
 
-/* ================== FILM GRAIN ================== */
-#grain {
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.04;
-    z-index: 20;
-}
-</style>
+        @keyframes subir {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-150vh) rotate(360deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* ================== EFEITO DE GRÃO ================== */
+        #grain {
+            pointer-events: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.05;
+            z-index: 200;
+        }
+    </style>
 </head>
 
 <body>
 
 <div id="scene">
+    <div id="grain"></div>
 
     <div id="proposalBox">
         <h1>Quer casar comigo?</h1>
@@ -142,8 +170,9 @@ button {
         no ficar quando seria mais fácil ir.</p>
 
         <p>Eu te amo todos os dias.<br>
-        Não só nos dias bons.<br>
-        Mas nos dias cansados,<br>
+        Não só nos dias bons.</p>
+        
+        <p>Mas nos dias cansados,<br>
         nos dias em que o mundo pesa,<br>
         nos dias em que você não percebe<br>
         o quanto é extraordinário.</p>
@@ -177,44 +206,59 @@ button {
 
         <p><strong>Todos os dias.<br>
         Sempre.</strong></p>
+
+        <p style="margin-top: 100px; font-size: 0.8rem;">❤️</p>
     </div>
 
     <audio id="music" src="perfect.mp4"></audio>
-
-    <div id="grain"></div>
-
 </div>
 
 <script>
-/* ================== NÃO FUGINDO ================== */
-const noBtn = document.getElementById("noBtn");
-setInterval(() => {
-    noBtn.style.left = Math.random() * 70 + "%";
-    noBtn.style.top = Math.random() * 70 + "%";
-}, 800);
-
-/* ================== SIM ================== */
-document.getElementById("yesBtn").onclick = () => {
-    document.getElementById("proposalBox").style.display = "none";
-
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const proposalBox = document.getElementById("proposalBox");
+    const poem = document.getElementById("poem");
     const music = document.getElementById("music");
-    music.play();
 
-    setTimeout(() => {
-        const poem = document.getElementById("poem");
+    /* Fugida do botão Não - Adaptado para toque também */
+    const moveButton = () => {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+    };
+
+    noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        moveButton();
+    });
+
+    /* Clique no Sim */
+    yesBtn.onclick = () => {
+        proposalBox.style.display = "none";
+        music.play();
+
+        // Inicia a animação do poema
         poem.classList.add("poem-animate");
-    }, 2000);
-};
 
-/* ================== CORAÇÕES COM FOTOS ================== */
-for (let i = 1; i <= 13; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.style.left = Math.random() * 80 + "%";
-    heart.style.animationDelay = Math.random() * 20 + "s";
-    heart.style.backgroundImage = `url(foto${i}.jpeg)`;
-    document.getElementById("scene").appendChild(heart);
-}
+        // Cria os corações com fotos após o Sim
+        for (let i = 1; i <= 13; i++) {
+            createHeart(i);
+        }
+    };
+
+    function createHeart(index) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 70 + 10 + "%"; // Evita grudar nas bordas
+        heart.style.animationDelay = Math.random() * 15 + "s";
+        
+        // Tenta carregar a imagem, se não existir, fica um bloco cinza suave
+        heart.style.backgroundImage = `url(foto${index}.jpeg)`; 
+        
+        document.getElementById("scene").appendChild(heart);
+    }
 </script>
 
 </body>
